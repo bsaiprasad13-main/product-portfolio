@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sai Prasad — Product Builder</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#EEF1EC;
+    --bg-alt:#E5E9E1;
+    --ink:#171A1C;
+    --ink-soft:#4B524C;
+    --card:#FFFFFF;
+    --border:#D3D8CC;
+    --signal:#2D5BFF;
+    --signal-soft:#EAEEFF;
+    --amber:#F2A93B;
+    --amber-soft:#FFF3DF;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Inter', sans-serif;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  .mono{font-family:'IBM Plex Mono', monospace;}
+  .display{font-family:'Space Grotesk', sans-serif;}
+  a{color:inherit; text-decoration:none;}
+  img{max-width:100%; display:block;}
+
+  /* subtle grid texture on background */
+  body::before{
+    content:"";
+    position:fixed; inset:0;
+    background-image:
+      linear-gradient(var(--border) 1px, transparent 1px),
+      linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size:64px 64px;
+    opacity:0.25;
+    pointer-events:none;
+    z-index:0;
+  }
+
+  .wrap{max-width:1080px; margin:0 auto; padding:0 28px; position:relative; z-index:1;}
+
+  /* NAV */
+  nav{
+    position:sticky; top:0; z-index:50;
+    backdrop-filter:blur(10px);
+    background:rgba(238,241,236,0.85);
+    border-bottom:1px solid var(--border);
+  }
+  nav .wrap{display:flex; align-items:center; justify-content:space-between; padding-top:18px; padding-bottom:18px;}
+  .nav-name{font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:1.05rem; letter-spacing:-0.01em;}
+  .nav-links{display:flex; gap:28px; font-size:0.88rem; color:var(--ink-soft);}
+  .nav-links a{transition:color .15s; position:relative;}
+  .nav-links a:hover{color:var(--ink);}
+  .nav-links a:focus-visible{outline:2px solid var(--signal); outline-offset:4px; border-radius:2px;}
+  @media(max-width:640px){.nav-links{display:none;}}
+
+  /* HERO */
+  header.hero{padding:96px 0 56px;}
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:'IBM Plex Mono',monospace; font-size:0.78rem;
+    color:var(--ink-soft); text-transform:uppercase; letter-spacing:0.08em;
+    margin-bottom:22px;
+  }
+  .eyebrow .dot{width:7px; height:7px; border-radius:50%; background:var(--signal); box-shadow:0 0 0 4px var(--signal-soft);}
+  h1.hero-title{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:clamp(2.4rem, 5.5vw, 4.1rem);
+    line-height:1.04;
+    letter-spacing:-0.02em;
+    max-width:15ch;
+  }
+  h1.hero-title .accent{color:var(--signal);}
+  .hero-sub{
+    margin-top:24px;
+    font-size:1.15rem;
+    color:var(--ink-soft);
+    max-width:52ch;
+    line-height:1.6;
+  }
+  .hero-actions{display:flex; gap:14px; margin-top:36px; flex-wrap:wrap;}
+  .btn{
+    font-family:'Inter',sans-serif; font-weight:600; font-size:0.92rem;
+    padding:13px 24px; border-radius:8px;
+    display:inline-flex; align-items:center; gap:8px;
+    transition:transform .15s, box-shadow .15s;
+  }
+  .btn:focus-visible{outline:2px solid var(--signal); outline-offset:3px;}
+  .btn-primary{background:var(--ink); color:var(--bg);}
+  .btn-primary:hover{transform:translateY(-2px); box-shadow:0 6px 18px rgba(0,0,0,0.18);}
+  .btn-ghost{border:1px solid var(--border); background:var(--card);}
+  .btn-ghost:hover{transform:translateY(-2px); box-shadow:0 6px 18px rgba(0,0,0,0.08);}
+
+  /* BUILD LOG STRIP — signature element */
+  .buildlog{
+    margin-top:64px;
+    border-top:1px solid var(--border);
+    border-bottom:1px solid var(--border);
+    background:var(--ink);
+    color:#D8DED6;
+    overflow:hidden;
+    position:relative;
+  }
+  .buildlog-inner{
+    display:flex; gap:0;
+    padding:16px 0;
+  }
+  .buildlog-track{
+    display:flex; gap:56px; white-space:nowrap;
+    animation:scroll-left 32s linear infinite;
+    padding-right:56px;
+  }
+  @media (prefers-reduced-motion: reduce){
+    .buildlog-track{animation:none; flex-wrap:wrap; white-space:normal;}
+  }
+  @keyframes scroll-left{
+    from{transform:translateX(0);}
+    to{transform:translateX(-50%);}
+  }
+  .buildlog-item{
+    font-family:'IBM Plex Mono',monospace; font-size:0.82rem;
+    display:flex; align-items:center; gap:10px;
+    color:#D8DED6;
+  }
+  .buildlog-item .cursor{color:var(--amber);}
+  .buildlog-item b{color:#fff; font-weight:500;}
+
+  /* SECTION HEADERS */
+  section{padding:88px 0;}
+  .section-head{margin-bottom:48px;}
+  .section-tag{
+    font-family:'IBM Plex Mono',monospace; font-size:0.78rem;
+    color:var(--signal); text-transform:uppercase; letter-spacing:0.08em;
+    margin-bottom:12px;
+  }
+  h2.section-title{
+    font-family:'Space Grotesk',sans-serif; font-weight:600;
+    font-size:clamp(1.7rem, 3vw, 2.3rem);
+    letter-spacing:-0.01em;
+  }
+  .section-desc{color:var(--ink-soft); margin-top:14px; max-width:60ch; font-size:1.02rem;}
+
+  /* ABOUT */
+  .about-grid{display:grid; grid-template-columns:1.3fr 1fr; gap:56px; align-items:start;}
+  @media(max-width:800px){.about-grid{grid-template-columns:1fr;}}
+  .about-text p{color:var(--ink-soft); margin-bottom:18px; font-size:1.03rem; line-height:1.7;}
+  .about-text strong{color:var(--ink); font-weight:600;}
+  .fact-card{
+    background:var(--card); border:1px solid var(--border); border-radius:12px;
+    padding:24px;
+  }
+  .fact-row{display:flex; justify-content:space-between; padding:12px 0; border-bottom:1px solid var(--border); font-size:0.92rem;}
+  .fact-row:last-child{border-bottom:none;}
+  .fact-label{color:var(--ink-soft);}
+  .fact-value{font-family:'IBM Plex Mono',monospace; font-weight:500; text-align:right;}
+
+  /* PROJECTS */
+  .project-grid{display:grid; grid-template-columns:1fr 1fr; gap:24px;}
+  @media(max-width:800px){.project-grid{grid-template-columns:1fr;}}
+  .project-card{
+    background:var(--card); border:1px solid var(--border); border-radius:14px;
+    padding:28px; display:flex; flex-direction:column; gap:16px;
+    transition:transform .18s, box-shadow .18s, border-color .18s;
+  }
+  .project-card:hover{transform:translateY(-4px); box-shadow:0 14px 32px rgba(23,26,28,0.09); border-color:#c4cabd;}
+  .project-top{display:flex; justify-content:space-between; align-items:flex-start; gap:12px;}
+  .project-tag{
+    font-family:'IBM Plex Mono',monospace; font-size:0.7rem; text-transform:uppercase; letter-spacing:0.06em;
+    background:var(--amber-soft); color:#8a5c10; padding:4px 10px; border-radius:20px; white-space:nowrap;
+  }
+  .project-title{font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:1.28rem;}
+  .project-desc{color:var(--ink-soft); font-size:0.96rem; line-height:1.6;}
+  .project-metric{
+    font-family:'IBM Plex Mono',monospace; font-size:0.82rem; color:var(--signal);
+    background:var(--signal-soft); border-radius:8px; padding:8px 12px; display:inline-block; width:fit-content;
+  }
+  .chip-row{display:flex; flex-wrap:wrap; gap:8px; margin-top:auto;}
+  .chip{
+    font-family:'IBM Plex Mono',monospace; font-size:0.72rem;
+    border:1px solid var(--border); border-radius:6px; padding:4px 9px; color:var(--ink-soft);
+  }
+  .project-link{font-size:0.88rem; font-weight:600; color:var(--ink); display:inline-flex; align-items:center; gap:6px;}
+  .project-link svg{width:14px; height:14px; transition:transform .15s;}
+  .project-link:hover svg{transform:translate(2px,-2px);}
+
+  /* EXPERIENCE TIMELINE */
+  .timeline{position:relative; padding-left:32px;}
+  .timeline::before{content:""; position:absolute; left:6px; top:6px; bottom:6px; width:1.5px; background:var(--border);}
+  .tl-item{position:relative; padding-bottom:44px;}
+  .tl-item:last-child{padding-bottom:0;}
+  .tl-item::before{
+    content:""; position:absolute; left:-32px; top:4px; width:13px; height:13px; border-radius:50%;
+    background:var(--card); border:2px solid var(--signal);
+  }
+  .tl-period{font-family:'IBM Plex Mono',monospace; font-size:0.78rem; color:var(--ink-soft); margin-bottom:6px;}
+  .tl-role{font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:1.15rem;}
+  .tl-org{color:var(--signal); font-weight:500; font-size:0.95rem; margin-top:2px;}
+  .tl-desc{color:var(--ink-soft); margin-top:10px; font-size:0.96rem; max-width:60ch; line-height:1.65;}
+
+  /* LEADERSHIP */
+  .lead-grid{display:grid; grid-template-columns:1fr 1fr; gap:24px;}
+  @media(max-width:800px){.lead-grid{grid-template-columns:1fr;}}
+  .lead-card{background:var(--card); border:1px solid var(--border); border-radius:14px; padding:28px;}
+  .lead-icon{
+    width:40px; height:40px; border-radius:10px; background:var(--bg-alt);
+    display:flex; align-items:center; justify-content:center; margin-bottom:16px; font-size:1.1rem;
+  }
+  .lead-title{font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:1.1rem; margin-bottom:8px;}
+  .lead-desc{color:var(--ink-soft); font-size:0.95rem; line-height:1.6;}
+  .progress-path{display:flex; align-items:center; gap:6px; margin-top:16px; flex-wrap:wrap;}
+  .progress-step{font-family:'IBM Plex Mono',monospace; font-size:0.72rem; background:var(--bg-alt); padding:4px 9px; border-radius:6px; color:var(--ink-soft);}
+  .progress-arrow{color:var(--border); font-size:0.8rem;}
+  .progress-step.final{background:var(--signal); color:#fff;}
+
+  /* FOOTER / CONTACT */
+  footer{padding:80px 0 56px; border-top:1px solid var(--border);}
+  .footer-inner{display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:32px;}
+  .footer-title{font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:clamp(1.6rem,3.5vw,2.4rem); letter-spacing:-0.01em; max-width:14ch;}
+  .footer-links{display:flex; gap:20px; flex-wrap:wrap;}
+  .footer-links a{
+    border:1px solid var(--border); border-radius:8px; padding:11px 20px; font-size:0.9rem; font-weight:600;
+    background:var(--card); transition:transform .15s, box-shadow .15s;
+  }
+  .footer-links a:hover{transform:translateY(-2px); box-shadow:0 6px 18px rgba(0,0,0,0.08);}
+  .footer-note{margin-top:56px; color:var(--ink-soft); font-size:0.82rem; font-family:'IBM Plex Mono',monospace;}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="nav-name display">Sai Prasad</div>
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#projects">Projects</a>
+      <a href="#experience">Experience</a>
+      <a href="#leadership">Leadership</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow"><span class="dot"></span> Building products, one shipped thing at a time</div>
+    <h1 class="hero-title display">I build real products for real users — <span class="accent">then I measure what happens.</span></h1>
+    <p class="hero-sub">Final-year Engineering Physics student at IIT Madras, headed into Product Management. I skip the case-study theater and ship working software instead — Discord communities with real backends, PWAs people actually install, and AI agents that do real work.</p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="#projects">See what I've shipped ↓</a>
+      <a class="btn btn-ghost" href="#contact">Get in touch</a>
+    </div>
+  </div>
+
+  <div class="buildlog">
+    <div class="buildlog-inner">
+      <div class="buildlog-track" id="buildlog-track"></div>
+    </div>
+  </div>
+</header>
+
+<section id="about">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="section-tag">// 01 — About</div>
+      <h2 class="section-title display">Engineering physics, product instincts</h2>
+    </div>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>I'm a final-year <strong>B.Tech in Engineering Physics at IIT Madras</strong> (Class of 2027), currently going through the <strong>NextLeap PM Fellowship</strong>. I got here the unconventional way — I deliberately extended my graduation timeline to build product skills instead of following the standard engineering-to-core-job path.</p>
+        <p>That instinct came from three years running large-scale operations at <strong>Saarang</strong>, IIT Madras's flagship cultural festival, where I coordinated cross-functional teams and logistics for tens of thousands of attendees. Somewhere in that chaos, I realized I liked solving for people and systems more than I liked solving for physics problem sets.</p>
+        <p>Since then, my approach has been consistent: don't just write PRDs for hypothetical products — build the real thing, ship it, and let the usage data make the case. Everything in my project section below is live or was live, not a Figma mockup.</p>
+      </div>
+      <div class="fact-card">
+        <div class="fact-row"><span class="fact-label">Institute</span><span class="fact-value">IIT Madras</span></div>
+        <div class="fact-row"><span class="fact-label">Program</span><span class="fact-value">B.Tech, Engineering Physics</span></div>
+        <div class="fact-row"><span class="fact-label">Graduating</span><span class="fact-value">2027</span></div>
+        <div class="fact-row"><span class="fact-label">JEE Advanced</span><span class="fact-value">AIR 1274</span></div>
+        <div class="fact-row"><span class="fact-label">Currently</span><span class="fact-value">NextLeap PM Fellow</span></div>
+        <div class="fact-row"><span class="fact-label">Also</span><span class="fact-value">Cricket captain</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects" style="background:var(--bg-alt);">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="section-tag">// 02 — Shipped</div>
+      <h2 class="section-title display">Things I built that people actually use</h2>
+      <p class="section-desc">No hypothetical case studies here. Every project below has a real backend, a real deployment, and real users.</p>
+    </div>
+    <div class="project-grid">
+
+      <div class="project-card">
+        <div class="project-top">
+          <div class="project-title display">CampusGuide</div>
+          <div class="project-tag">Community · Backend</div>
+        </div>
+        <p class="project-desc">A verified Discord community for IITM students, backed by a full production system: FastAPI + PostgreSQL, HMAC-signed OAuth with email-OTP verification via Resend, and a privacy-first analytics pipeline. Deployed on Railway under a custom domain.</p>
+        <div class="project-metric">campusguide.site — live deployment</div>
+        <div class="chip-row">
+          <span class="chip">FastAPI</span><span class="chip">PostgreSQL</span><span class="chip">OAuth</span><span class="chip">Railway</span><span class="chip">Cloudflare</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-top">
+          <div class="project-title display">Free Rooms</div>
+          <div class="project-tag">PWA · Consumer</div>
+        </div>
+        <p class="project-desc">A progressive web app that cross-references IITM's timetable data to show which classrooms are empty right now. Built end-to-end, shipped, and picked up organically across campus with no paid promotion.</p>
+        <div class="project-metric">GA4 dashboard tracking retention, feature usage & installs</div>
+        <div class="chip-row">
+          <span class="chip">PWA</span><span class="chip">GA4</span><span class="chip">Vercel</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-top">
+          <div class="project-title display">Mutual Fund FAQ Chatbot</div>
+          <div class="project-tag">RAG · Fintech</div>
+        </div>
+        <p class="project-desc">A retrieval-augmented chatbot that answers mutual fund questions grounded in real documentation, with a built-in PII-refusal system so it never handles sensitive personal or financial data it shouldn't.</p>
+        <div class="project-metric">Deployed on Railway</div>
+        <div class="chip-row">
+          <span class="chip">FastAPI</span><span class="chip">ChromaDB</span><span class="chip">Groq / Llama-3</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-top">
+          <div class="project-title display">Weekly Product Review Pulse</div>
+          <div class="project-tag">AI Agent · Internal Tool</div>
+        </div>
+        <p class="project-desc">An autonomous agent that scrapes Play Store reviews, clusters them by theme with UMAP + HDBSCAN, and synthesizes a weekly digest — delivered straight to Google Docs and Gmail through a custom MCP server.</p>
+        <div class="project-metric">Automated weekly, zero manual review-reading</div>
+        <div class="chip-row">
+          <span class="chip">UMAP + HDBSCAN</span><span class="chip">Groq / Gemini</span><span class="chip">MCP Server</span><span class="chip">Railway</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="section-tag">// 03 — Experience</div>
+      <h2 class="section-title display">Where I've worked</h2>
+    </div>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-period mono">Apr 2026 — Jul 2026 · Ongoing</div>
+        <div class="tl-role">PM Fellow</div>
+        <div class="tl-org">NextLeap PM Fellowship</div>
+        <div class="tl-desc">Structured, cohort-based training in product management fundamentals — problem framing, prioritization, and stakeholder communication — while building CampusGuide and my resume portfolio in parallel.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-period mono">Founder's Office Intern</div>
+        <div class="tl-role">Founder's Office</div>
+        <div class="tl-org">SpandanAI (IIT Madras deep-tech startup)</div>
+        <div class="tl-desc">Worked directly with the founders on early-stage product and operations problems at an IIT Madras-incubated deep-tech venture.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-period mono">Product Development Intern</div>
+        <div class="tl-role">Product Development</div>
+        <div class="tl-org">The Startup School (Ramsetu Alternate Education Solutions)</div>
+        <div class="tl-desc">Authored PRDs for an LMS and company website, and drove workshop registration growth through targeted messaging and network outreach.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="leadership" style="background:var(--bg-alt);">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="section-tag">// 04 — Leadership</div>
+      <h2 class="section-title display">Off the keyboard</h2>
+    </div>
+    <div class="lead-grid">
+      <div class="lead-card">
+        <div class="lead-icon">🎪</div>
+        <div class="lead-title display">Saarang — four years, four roles</div>
+        <div class="lead-desc">IIT Madras's flagship cultural festival, run for tens of thousands of attendees. I worked my way from Volunteer to Super Coordinator, managing cross-functional teams and logistics at scale — the experience that first pulled me toward product thinking.</div>
+        <div class="progress-path">
+          <span class="progress-step">Volunteer</span><span class="progress-arrow">→</span>
+          <span class="progress-step">Coordinator</span><span class="progress-arrow">→</span>
+          <span class="progress-step">Core Coordinator</span><span class="progress-arrow">→</span>
+          <span class="progress-step final">Super Coordinator</span>
+        </div>
+      </div>
+      <div class="lead-card">
+        <div class="lead-icon">🏏</div>
+        <div class="lead-title display">Cricket captain</div>
+        <div class="lead-desc">Captained multiple department and inter-department cricket teams — reading a game in real time and getting a group aligned under pressure translates more directly to product work than people expect.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="footer-inner">
+      <div class="footer-title display">Let's build something worth shipping.</div>
+      <div class="footer-links">
+        <a href="#" id="linkedin-link">LinkedIn ↗</a>
+        <a href="#" id="email-link">Email ↗</a>
+        <a href="#" id="resume-link">Resume ↓</a>
+      </div>
+    </div>
+    <div class="footer-note">Sai Prasad · IIT Madras, Engineering Physics '27 · Built with real backends, not mockups</div>
+  </div>
+</footer>
+
+<script>
+  // Build log ticker — signature element, duplicated for seamless loop
+  const items = [
+    { label: "campusguide.site", value: "live" },
+    { label: "Free Rooms", value: "PWA · organic traction" },
+    { label: "RAG Chatbot", value: "FastAPI + ChromaDB" },
+    { label: "Weekly Pulse Agent", value: "automated · weekly" },
+    { label: "NextLeap Fellowship", value: "in progress" },
+    { label: "Saarang", value: "Super Coordinator" },
+  ];
+  const track = document.getElementById('buildlog-track');
+  function renderItems(){
+    return items.map(i => `<span class="buildlog-item"><span class="cursor">▸</span> ${i.label} <b>${i.value}</b></span>`).join('');
+  }
+  track.innerHTML = renderItems() + renderItems();
+
+  // Placeholder links — replace hrefs with real URLs
+  document.getElementById('linkedin-link').href = "https://linkedin.com/in/your-handle";
+  document.getElementById('email-link').href = "mailto:your-email@example.com";
+  document.getElementById('resume-link').href = "#";
+</script>
+
+</body>
+</html>
