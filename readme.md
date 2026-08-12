@@ -4,7 +4,7 @@ This repository contains the source code for my personal portfolio website. I am
 
 ## Overview
 
-The portfolio is a single-page HTML website (`portfolio.html`) built with raw HTML and CSS. It showcases my shipped projects, experience, and leadership roles.
+The portfolio is a single-page HTML website (`index.html`) built with raw HTML and CSS. It showcases my shipped projects, experience, and leadership roles.
 
 ### Key Sections
 - **About:** Background in Engineering Physics and transition to Product Management.
@@ -20,8 +20,8 @@ The portfolio is a single-page HTML website (`portfolio.html`) built with raw HT
 
 ## How to View
 
-Simply open `portfolio.html` in any modern web browser to view the portfolio locally.
+Simply open `index.html` in any modern web browser to view the portfolio locally.
 
 ## Contact
-- LinkedIn: [Update in portfolio.html]
-- Email: [Update in portfolio.html]
+- LinkedIn: [Update in index.html]
+- Email: [Update in index.html]
