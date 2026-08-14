@@ -20,14 +20,14 @@
     --amber-soft:#FFF3DF;
   }
   *{box-sizing:border-box; margin:0; padding:0;}
-  html{scroll-behavior:smooth; overflow-x:hidden;}
+  html{scroll-behavior:smooth; overflow-x:clip;}
   body{
     background:var(--bg);
     color:var(--ink);
     font-family:'Inter', sans-serif;
     line-height:1.5;
     -webkit-font-smoothing:antialiased;
-    overflow-x:hidden;
+    overflow-x:clip;
   }
   .mono{font-family:'IBM Plex Mono', monospace;}
   .display{font-family:'Space Grotesk', sans-serif;}
@@ -57,7 +57,14 @@
     border-bottom:1px solid var(--border);
   }
   nav .wrap{display:flex; align-items:center; justify-content:space-between; padding-top:18px; padding-bottom:18px;}
+  .nav-brand { display: flex; align-items: center; gap: 14px; }
   .nav-name{font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:1.05rem; letter-spacing:-0.01em;}
+  .nav-tagline {
+    font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem; color: var(--ink-soft);
+    display: flex; align-items: center; gap: 6px; padding: 4px 10px;
+    background: rgba(238,241,236,0.5); border: 1px solid var(--border); border-radius: 20px;
+  }
+  .nav-tagline .nav-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--signal); }
   .nav-links{display:flex; gap:28px; font-size:0.88rem; color:var(--ink-soft);}
   .nav-links a{transition:color .15s; position:relative;}
   .nav-links a:hover{color:var(--ink);}
@@ -81,6 +88,8 @@
   .menu-btn.open span:nth-child(3){transform:translateY(-6px) rotate(-45deg);}
 
   @media(max-width:800px){
+    .nav-brand { flex-direction: column; align-items: flex-start; gap: 4px; }
+    .nav-tagline { font-size: 0.65rem; padding: 2px 8px; }
     .menu-btn{display:block;}
     .nav-links{
       position:fixed; top:0; left:0; width:100%; height:100vh;
@@ -269,7 +278,10 @@
 
 <nav>
   <div class="wrap">
-    <div class="nav-name display">Sai Prasad</div>
+    <div class="nav-brand">
+      <div class="nav-name display">Sai Prasad</div>
+      <div class="nav-tagline"><span class="nav-dot"></span> A curious, product-lens builder</div>
+    </div>
     <button class="menu-btn" aria-label="Toggle menu" id="mobile-menu-btn">
       <span></span><span></span><span></span>
     </button>
