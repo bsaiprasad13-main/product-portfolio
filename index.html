@@ -62,7 +62,36 @@
   .nav-links a{transition:color .15s; position:relative;}
   .nav-links a:hover{color:var(--ink);}
   .nav-links a:focus-visible{outline:2px solid var(--signal); outline-offset:4px; border-radius:2px;}
-  @media(max-width:640px){.nav-links{display:none;}}
+  /* Hamburger Menu */
+  .menu-btn{
+    display:none; background:none; border:none; cursor:pointer;
+    width:32px; height:32px; position:relative; z-index:60;
+  }
+  .menu-btn span{
+    display:block; width:22px; height:2px; background:var(--ink);
+    position:absolute; left:5px; transition:transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s;
+    border-radius:2px;
+  }
+  .menu-btn span:nth-child(1){top:10px;}
+  .menu-btn span:nth-child(2){top:16px;}
+  .menu-btn span:nth-child(3){top:22px;}
+  
+  .menu-btn.open span:nth-child(1){transform:translateY(6px) rotate(45deg);}
+  .menu-btn.open span:nth-child(2){opacity:0;}
+  .menu-btn.open span:nth-child(3){transform:translateY(-6px) rotate(-45deg);}
+
+  @media(max-width:640px){
+    .menu-btn{display:block;}
+    .nav-links{
+      position:fixed; top:0; left:0; width:100%; height:100vh;
+      background:rgba(238,241,236,0.98); backdrop-filter:blur(15px);
+      flex-direction:column; align-items:center; justify-content:center;
+      gap:32px; font-size:1.5rem; transform:translateY(-100%);
+      transition:transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index:55;
+    }
+    .nav-links.open{transform:translateY(0);}
+  }
 
   /* HERO */
   header.hero{padding:96px 0 56px;}
@@ -241,12 +270,15 @@
 <nav>
   <div class="wrap">
     <div class="nav-name display">Sai Prasad</div>
-    <div class="nav-links">
-      <a href="#about">About</a>
-      <a href="#projects">Projects</a>
-      <a href="#experience">Experience</a>
-      <a href="#leadership">Leadership</a>
-      <a href="#contact">Contact</a>
+    <button class="menu-btn" aria-label="Toggle menu" id="mobile-menu-btn">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="nav-links" id="nav-links">
+      <a href="#about" class="nav-item">About</a>
+      <a href="#projects" class="nav-item">Projects</a>
+      <a href="#experience" class="nav-item">Experience</a>
+      <a href="#leadership" class="nav-item">Leadership</a>
+      <a href="#contact" class="nav-item">Contact</a>
     </div>
   </div>
 </nav>
@@ -444,6 +476,25 @@
   document.getElementById('linkedin-link').href = "https://linkedin.com/in/your-handle";
   document.getElementById('email-link').href = "mailto:your-email@example.com";
   document.getElementById('resume-link').href = "#";
+
+  // Mobile Menu Toggle
+  const menuBtn = document.getElementById('mobile-menu-btn');
+  const navLinks = document.getElementById('nav-links');
+  const navItems = document.querySelectorAll('.nav-item');
+  
+  menuBtn.addEventListener('click', () => {
+    menuBtn.classList.toggle('open');
+    navLinks.classList.toggle('open');
+    document.body.style.overflow = navLinks.classList.contains('open') ? 'hidden' : '';
+  });
+  
+  navItems.forEach(item => {
+    item.addEventListener('click', () => {
+      menuBtn.classList.remove('open');
+      navLinks.classList.remove('open');
+      document.body.style.overflow = '';
+    });
+  });
 </script>
 
 </body>
