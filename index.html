@@ -12,38 +12,40 @@
 </script>
 <style>
   :root{
-    --bg:#EEF1EC;
-    --bg-alt:#E5E9E1;
-    --ink:#171A1C;
-    --ink-soft:#4B524C;
+    --bg:#F6F1E7;
+    --bg-alt:#EDE3D2;
+    --ink:#241C15;
+    --ink-soft:#6E5F4E;
     --card:#FFFFFF;
-    --border:#D3D8CC;
-    --signal:#2D5BFF;
-    --signal-soft:#EAEEFF;
-    --amber:#F2A93B;
-    --amber-soft:#FFF3DF;
-    --nav-bg:rgba(238,241,236,0.85);
-    --nav-mobile-bg:rgba(238,241,236,0.98);
-    --tagline-bg:rgba(238,241,236,0.5);
-    --shadow-hover:0 14px 32px rgba(23,26,28,0.09);
-    --border-hover:#c4cabd;
+    --border:#DED0B8;
+    --signal:#B8420A;
+    --signal-soft:#F7E1D2;
+    --amber:#C98A1D;
+    --amber-soft:#F3E4C4;
+    --amber-ink:#5B4310;
+    --nav-bg:rgba(246,241,231,0.85);
+    --nav-mobile-bg:rgba(246,241,231,0.98);
+    --tagline-bg:rgba(246,241,231,0.5);
+    --shadow-hover:0 14px 32px rgba(36,28,21,0.12);
+    --border-hover:#CBB98F;
   }
   [data-theme="dark"] {
-    --bg:#121413;
-    --bg-alt:#1A1D1C;
-    --ink:#EEF1EC;
-    --ink-soft:#A0A6A1;
-    --card:#1A1D1C;
-    --border:#323834;
-    --signal:#4D73FF;
-    --signal-soft:#1A2345;
-    --amber:#F2A93B;
-    --amber-soft:#4A381C;
-    --nav-bg:rgba(18,20,19,0.85);
-    --nav-mobile-bg:rgba(18,20,19,0.98);
-    --tagline-bg:rgba(18,20,19,0.5);
-    --shadow-hover:0 14px 32px rgba(0,0,0,0.4);
-    --border-hover:#4B524C;
+    --bg:#1B140E;
+    --bg-alt:#251C13;
+    --ink:#F5ECDD;
+    --ink-soft:#BBA98D;
+    --card:#251C13;
+    --border:#4C3B27;
+    --signal:#E2711A;
+    --signal-soft:#3C2414;
+    --amber:#C98A1D;
+    --amber-soft:#3A2E12;
+    --amber-ink:#F0D28A;
+    --nav-bg:rgba(27,20,14,0.85);
+    --nav-mobile-bg:rgba(27,20,14,0.98);
+    --tagline-bg:rgba(27,20,14,0.5);
+    --shadow-hover:0 14px 32px rgba(0,0,0,0.45);
+    --border-hover:#5C4830;
   }
   *{box-sizing:border-box; margin:0; padding:0;}
   html{scroll-behavior:smooth; overflow-x:clip;}
@@ -93,7 +95,7 @@
     transition: background 0.3s ease, border-color 0.3s ease;
   }
   .nav-tagline .nav-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--signal); }
-  .nav-links{display:flex; gap:28px; font-size:0.88rem; color:var(--ink-soft);}
+  .nav-links{display:flex; flex-wrap:wrap; row-gap:8px; gap:28px; font-size:0.88rem; color:var(--ink-soft);}
   .nav-links a{transition:color .15s; position:relative;}
   .nav-links a:hover{color:var(--ink);}
   .nav-links a:focus-visible{outline:2px solid var(--signal); outline-offset:4px; border-radius:2px;}
@@ -239,7 +241,7 @@
   .about-grid{display:grid; grid-template-columns:1.3fr minmax(0, 1fr); gap:56px; align-items:start;}
   @media(max-width:800px){.about-grid{grid-template-columns:minmax(0, 1fr);}}
   .about-text p{color:var(--ink-soft); margin-bottom:18px; font-size:1.03rem; line-height:1.7;}
-  .about-text strong{color:var(--ink); font-weight:600;}
+  .about-text strong, .card-list strong{color:var(--signal); font-weight:600;}
   .fact-card{
     background:var(--card); border:1px solid var(--border); border-radius:12px;
     padding:24px;
@@ -261,7 +263,7 @@
   .project-top{display:flex; justify-content:space-between; align-items:flex-start; gap:12px;}
   .project-tag{
     font-family:'IBM Plex Mono',monospace; font-size:0.7rem; text-transform:uppercase; letter-spacing:0.06em;
-    background:var(--amber-soft); color:#8a5c10; padding:4px 10px; border-radius:20px; white-space:nowrap;
+    background:var(--amber-soft); color:var(--amber-ink); padding:4px 10px; border-radius:20px; white-space:nowrap;
   }
   .project-title{font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:1.28rem;}
   .project-desc{color:var(--ink-soft); font-size:0.96rem; line-height:1.6;}
@@ -304,7 +306,7 @@
   .lead-desc{color:var(--ink-soft); font-size:0.95rem; line-height:1.6;}
   .progress-path{display:flex; align-items:center; gap:6px; margin-top:16px; flex-wrap:wrap;}
   .progress-step{font-family:'IBM Plex Mono',monospace; font-size:0.72rem; background:var(--bg-alt); padding:4px 9px; border-radius:6px; color:var(--ink-soft);}
-  .progress-arrow{color:var(--border); font-size:0.8rem;}
+  .progress-arrow{color:var(--ink-soft); font-size:0.8rem;}
   .progress-step.final{background:var(--signal); color:#fff;}
 
   /* FOOTER / CONTACT */
@@ -318,6 +320,14 @@
   }
   .footer-links a:hover{transform:translateY(-2px); box-shadow:0 6px 18px rgba(0,0,0,0.08);}
   .footer-note{margin-top:56px; color:var(--ink-soft); font-size:0.82rem; font-family:'IBM Plex Mono',monospace;}
+
+  /* PROJECT SUBSECTIONS */
+  .projects-sub{margin-bottom:28px;}
+  .projects-sub + .projects-sub{margin-top:56px;}
+
+  /* CARD BULLET LISTS (projects, leadership) */
+  .card-list{margin:0; padding-left:18px; display:flex; flex-direction:column; gap:6px;}
+  .card-list li{color:var(--ink-soft); font-size:0.94rem; line-height:1.55;}
 </style>
 </head>
 <body>
@@ -329,10 +339,12 @@
       <div class="nav-tagline"><span class="nav-dot"></span> A curious, product-lens builder</div>
     </div>
     <div class="nav-links" id="nav-links">
-      <a href="#about" class="nav-item">About</a>
-      <a href="#projects" class="nav-item">Projects</a>
+      <a href="#about" class="nav-item">How I got here</a>
+      <a href="#products" class="nav-item">Products Built & Launched</a>
+      <a href="#technical-projects" class="nav-item">Technical Projects</a>
       <a href="#experience" class="nav-item">Experience</a>
-      <a href="#leadership" class="nav-item">Leadership</a>
+      <a href="#leadership" class="nav-item">Also Worth Knowing</a>
+      <a href="#sports" class="nav-item">Where I compete</a>
       <a href="#contact" class="nav-item">Contact</a>
     </div>
     <div class="nav-actions" style="display:flex; align-items:center; gap:12px;">
@@ -349,9 +361,9 @@
 
 <header class="hero">
   <div class="wrap">
-    <div class="eyebrow"><span class="dot"></span> Building products, one shipped thing at a time</div>
-    <h1 class="hero-title display">I build real products for real users — <span class="accent">then I measure what happens.</span></h1>
-    <p class="hero-sub">A student at IIT Madras, headed into Product Management. I skip the case-study theater and ship working software instead — Discord communities with real backends, PWAs people actually install, and AI agents that do real work.</p>
+    <div class="eyebrow"><span class="dot"></span> I Ship Solutions, Not Just Products</div>
+    <h1 class="hero-title display">Hi, I'm Sai. <span class="accent">Everything I've built, learned, and led lives on this page.</span></h1>
+    <p class="hero-sub">Scroll down and you'll find the projects I've shipped, the roles I've held, and the skills I've picked up along the way.</p>
     <div class="hero-actions">
       <a class="btn btn-primary" href="#projects">See what I've shipped ↓</a>
       <a class="btn btn-ghost" href="#contact">Get in touch</a>
@@ -368,18 +380,22 @@
 <section id="about">
   <div class="wrap">
     <div class="section-head">
-      <div class="section-tag">// 01 — About</div>
-      <h2 class="section-title display">Engineering physics, product instincts</h2>
+      <h2 class="section-title display">// 01 — How I got here</h2>
     </div>
     <div class="about-grid">
       <div class="about-text">
-        <p>I'm a <strong>student at IIT Madras</strong>, currently going through the <strong>NextLeap PM Fellowship</strong>. I got here the unconventional way — I deliberately extended my graduation timeline to build product skills instead of following the standard engineering-to-core-job path.</p>
-        <p>That instinct came from three years running large-scale operations at <strong>Saarang</strong>, IIT Madras's flagship cultural festival, where I coordinated cross-functional teams and logistics for tens of thousands of attendees. Somewhere in that chaos, I realized I liked solving for people and systems more than I liked solving for physics problem sets.</p>
-        <p>Since then, my approach has been consistent: don't just write PRDs for hypothetical products — build the real thing, ship it, and let the usage data make the case. Everything in my project section below is live or was live, not a Figma mockup.</p>
+        <p>I used college as a testing ground, trying things until something clicked. In my first and second year, I leaned into coding and liked it, but I was mostly building what others asked me to, without much room to think for myself. In my third year, I moved to design, hoping for more creative freedom. It helped, but I noticed design was mostly about making things look and feel right, without really digging into the problem behind it.</p>
+        <p>It was only in my fourth year that I discovered product management, and it felt different right away. It wasn't just one skill. It needed all of them together: understanding the user, the business, the market, and the engineering behind it. That mix is what pulled me in.</p>
+        <p>Thinking back, I'd already been doing this without realizing it: leading the Safety & Security team at <strong>Saarang</strong>, working in project management at <strong>CFI</strong>, and captaining my cricket team. All of it came down to the same things: taking ownership, working with people, and staying calm under pressure.</p>
+        <p>By my fourth year, I knew product was the right path, but I wasn't ready to walk into the corporate world and compete with confidence. So I took a big risk. I added an extra year to my degree, just to get properly ready for product roles. I'm in that year now, and it's been worth it.</p>
+        <div style="display:flex; flex-direction:column; gap:10px; margin-top:8px;">
+          <div class="project-metric">Summary: I tried a lot of things before I found the one that made sense to me.</div>
+          <div class="project-metric">Takeaway: Give everything to what you're doing. That's how you find what you like.</div>
+        </div>
       </div>
       <div class="fact-card">
         <div class="fact-row"><span class="fact-label">Institute</span><span class="fact-value">IIT Madras</span></div>
-        <div class="fact-row"><span class="fact-label">Currently</span><span class="fact-value">NextLeap PM Fellow</span></div>
+        <div class="fact-row"><span class="fact-label">Currently</span><span class="fact-value">Building toward product roles</span></div>
         <div class="fact-row"><span class="fact-label">Also</span><span class="fact-value">Cricket captain</span></div>
       </div>
     </div>
@@ -388,61 +404,86 @@
 
 <section id="projects" style="background:var(--bg-alt);">
   <div class="wrap">
-    <div class="section-head">
-      <div class="section-tag">// 02 — Shipped</div>
-      <h2 class="section-title display">Things I built that people actually use</h2>
-      <p class="section-desc">No hypothetical case studies here. Every project below has a real backend, a real deployment, and real users.</p>
+    <div class="projects-sub" id="products">
+      <div class="section-head">
+        <h2 class="section-title display">// 02 — Products Built & Launched</h2>
+      </div>
+      <div class="project-grid">
+
+        <div class="project-card">
+          <div class="project-top">
+            <div class="project-title display">CampusGuide</div>
+            <div class="project-tag">Knowledge Base · Community · Founder</div>
+          </div>
+          <p class="project-desc">A student knowledge base and community platform built from scratch on Discord, with a real backend behind it.</p>
+          <ul class="card-list">
+            <li>Talked to 30+ students and alumni first, then built the platform around what they actually needed</li>
+            <li>Built a 3-part system (backend, Discord bot, and analytics) that tracks usage without storing any private messages</li>
+            <li>Reached 260 active users in 3 weeks, and later grew it to also support referrals and alumni hiring</li>
+          </ul>
+          <div class="chip-row">
+            <span class="chip">FastAPI</span><span class="chip">PostgreSQL</span><span class="chip">OAuth</span><span class="chip">Railway</span><span class="chip">Cloudflare</span>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-top">
+            <div class="project-title display">Free Rooms</div>
+            <div class="project-tag">Room Finder · Student Tool · Founder</div>
+          </div>
+          <p class="project-desc">A simple app that shows students which classrooms are free right now, so they always have a place to sit and work.</p>
+          <ul class="card-list">
+            <li>Started from a problem I faced myself: finding an empty room between classes</li>
+            <li>Built a system that tracks 135 rooms across 18 buildings using real timetable data</li>
+            <li>Shipped it as an installable app with easy filters, and grew it to 250+ users in 2 weeks through guerrilla marketing</li>
+          </ul>
+          <div class="chip-row">
+            <span class="chip">PWA</span><span class="chip">GA4</span><span class="chip">GitHub</span>
+          </div>
+        </div>
+
+      </div>
     </div>
-    <div class="project-grid">
 
-      <div class="project-card">
-        <div class="project-top">
-          <div class="project-title display">CampusGuide</div>
-          <div class="project-tag">Community · Backend</div>
-        </div>
-        <p class="project-desc">A verified Discord community for IITM students, backed by a full production system: FastAPI + PostgreSQL, HMAC-signed OAuth with email-OTP verification via Resend, and a privacy-first analytics pipeline. Deployed on Railway under a custom domain.</p>
-        <div class="project-metric">campusguide.site — live deployment</div>
-        <div class="chip-row">
-          <span class="chip">FastAPI</span><span class="chip">PostgreSQL</span><span class="chip">OAuth</span><span class="chip">Railway</span><span class="chip">Cloudflare</span>
-        </div>
+    <div class="projects-sub" id="technical-projects">
+      <div class="section-head">
+        <h2 class="section-title display">// 03 — Technical Projects</h2>
       </div>
+      <div class="project-grid">
 
-      <div class="project-card">
-        <div class="project-top">
-          <div class="project-title display">Free Rooms</div>
-          <div class="project-tag">PWA · Consumer</div>
+        <div class="project-card">
+          <div class="project-top">
+            <div class="project-title display">Mutual Fund FAQ Assistant</div>
+            <div class="project-tag">RAG Chatbot · Fintech</div>
+          </div>
+          <p class="project-desc">A chatbot that answers mutual fund questions using real fund data, so it never makes up an answer.</p>
+          <ul class="card-list">
+            <li>Built with a 3-layer safety system that blocks investment advice and personal data requests</li>
+            <li>Combined web scraping, embeddings, and a fast open-source model to power accurate answers</li>
+            <li>Tested against 7 rounds of tricky and edge-case questions to confirm the answers stay reliable</li>
+          </ul>
+          <div class="chip-row">
+            <span class="chip">FastAPI</span><span class="chip">ChromaDB</span><span class="chip">Groq</span><span class="chip">Llama-3</span>
+          </div>
         </div>
-        <p class="project-desc">A progressive web app that cross-references IITM's timetable data to show which classrooms are empty right now. Built end-to-end, shipped, and picked up organically across campus with no paid promotion.</p>
-        <div class="project-metric">GA4 dashboard tracking retention, feature usage & installs</div>
-        <div class="chip-row">
-          <span class="chip">PWA</span><span class="chip">GA4</span><span class="chip">Vercel</span>
+
+        <div class="project-card">
+          <div class="project-top">
+            <div class="project-title display">Weekly Product Review Pulse</div>
+            <div class="project-tag">AI Agent · MCP · Internal Tool</div>
+          </div>
+          <p class="project-desc">An agent that reads thousands of app store reviews every week and turns them into a short, useful summary.</p>
+          <ul class="card-list">
+            <li>Collects and groups 5000+ reviews by theme automatically, using clustering</li>
+            <li>Uses AI to summarize the key insights, backed by real quotes so nothing is made up</li>
+            <li>Built a custom MCP server that connects the agent directly to Google Docs and Gmail, so reports and alerts get sent out automatically, with all personal data removed first</li>
+          </ul>
+          <div class="chip-row">
+            <span class="chip">UMAP + HDBSCAN</span><span class="chip">Groq</span><span class="chip">Gemini</span><span class="chip">MCP Server</span><span class="chip">Railway</span>
+          </div>
         </div>
+
       </div>
-
-      <div class="project-card">
-        <div class="project-top">
-          <div class="project-title display">Mutual Fund FAQ Chatbot</div>
-          <div class="project-tag">RAG · Fintech</div>
-        </div>
-        <p class="project-desc">A retrieval-augmented chatbot that answers mutual fund questions grounded in real documentation, with a built-in PII-refusal system so it never handles sensitive personal or financial data it shouldn't.</p>
-        <div class="project-metric">Deployed on Railway</div>
-        <div class="chip-row">
-          <span class="chip">FastAPI</span><span class="chip">ChromaDB</span><span class="chip">Groq / Llama-3</span>
-        </div>
-      </div>
-
-      <div class="project-card">
-        <div class="project-top">
-          <div class="project-title display">Weekly Product Review Pulse</div>
-          <div class="project-tag">AI Agent · Internal Tool</div>
-        </div>
-        <p class="project-desc">An autonomous agent that scrapes Play Store reviews, clusters them by theme with UMAP + HDBSCAN, and synthesizes a weekly digest — delivered straight to Google Docs and Gmail through a custom MCP server.</p>
-        <div class="project-metric">Automated weekly, zero manual review-reading</div>
-        <div class="chip-row">
-          <span class="chip">UMAP + HDBSCAN</span><span class="chip">Groq / Gemini</span><span class="chip">MCP Server</span><span class="chip">Railway</span>
-        </div>
-      </div>
-
     </div>
   </div>
 </section>
@@ -450,21 +491,18 @@
 <section id="experience">
   <div class="wrap">
     <div class="section-head">
-      <div class="section-tag">// 03 — Experience</div>
-      <h2 class="section-title display">Where I've worked</h2>
+      <h2 class="section-title display">// 04 — Experience</h2>
     </div>
     <div class="timeline">
       <div class="tl-item">
-        <div class="tl-period mono">Apr 2026 — Jul 2026 · Ongoing</div>
+        <div class="tl-period mono">Apr 2026 – Jul 2026</div>
         <div class="tl-role">PM Fellow</div>
         <div class="tl-org">NextLeap PM Fellowship</div>
-        <div class="tl-desc">Structured, cohort-based training in product management fundamentals — problem framing, prioritization, and stakeholder communication — while building CampusGuide and my resume portfolio in parallel.</div>
       </div>
       <div class="tl-item">
-        <div class="tl-period mono">Product Development Intern</div>
-        <div class="tl-role">Product Development</div>
-        <div class="tl-org">The Startup School (Ramsetu Alternate Education Solutions)</div>
-        <div class="tl-desc">Authored PRDs for an LMS and company website, and drove workshop registration growth through targeted messaging and network outreach.</div>
+        <div class="tl-period mono">May 2026 – Jul 2026</div>
+        <div class="tl-role">Product Development Intern</div>
+        <div class="tl-org">The Startup School (Ramsetu Alternate Education Solutions Pvt Ltd)</div>
       </div>
     </div>
   </div>
@@ -473,34 +511,73 @@
 <section id="leadership" style="background:var(--bg-alt);">
   <div class="wrap">
     <div class="section-head">
-      <div class="section-tag">// 04 — Leadership</div>
-      <h2 class="section-title display">Off the keyboard</h2>
+      <h2 class="section-title display">// 05 — Also Worth Knowing</h2>
     </div>
     <div class="lead-grid">
       <div class="lead-card">
         <div class="lead-icon">🎪</div>
-        <div class="lead-title display">Saarang — four years, four roles</div>
-        <div class="lead-desc">IIT Madras's flagship cultural festival, run for tens of thousands of attendees. I worked my way from Volunteer to Super Coordinator, managing cross-functional teams and logistics at scale — the experience that first pulled me toward product thinking.</div>
+        <div class="lead-title display">Saarang (2022 – 2026)</div>
+        <ul class="card-list">
+          <li>Saarang is IIT Madras's big cultural festival, run on a budget of around 2 crores, with 11 teams working behind the scenes</li>
+          <li>I was part of the Safety & Security (SNS) team for four years</li>
+          <li><strong>Volunteer</strong> in 2022, <strong>Coordinator</strong> in 2023, and <strong>Super Coordinator</strong> in 2025, where I also led the Creatives team</li>
+          <li>Came back as a <strong>Volunteer</strong> in 2026, just to help wherever the team needed me</li>
+        </ul>
         <div class="progress-path">
           <span class="progress-step">Volunteer</span><span class="progress-arrow">→</span>
           <span class="progress-step">Coordinator</span><span class="progress-arrow">→</span>
-          <span class="progress-step">Core Coordinator</span><span class="progress-arrow">→</span>
-          <span class="progress-step final">Super Coordinator</span>
+          <span class="progress-step final">Super Coordinator (Head of Creatives)</span><span class="progress-arrow">→</span>
+          <span class="progress-step">Volunteer</span>
         </div>
       </div>
       <div class="lead-card">
-        <div class="lead-icon">🏏</div>
-        <div class="lead-title display">Cricket captain</div>
-        <div class="lead-desc">Captained multiple department and inter-department cricket teams — reading a game in real time and getting a group aligned under pressure translates more directly to product work than people expect.</div>
+        <div class="lead-icon">🛠️</div>
+        <div class="lead-title display">CFI (Center for Innovation)</div>
+        <div class="tl-org" style="margin-bottom:12px;">Project Manager, 2023–24.</div>
+        <ul class="card-list">
+          <li>Guided 5 Aero Club projects through 3 review cycles, helping teams improve steadily</li>
+          <li>Organized the Open House and Research Conclave with a budget of 17 lakhs, bringing different teams together</li>
+        </ul>
       </div>
     </div>
+  </div>
+</section>
+
+<section id="sports">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 class="section-title display">// 06 — Where I compete</h2>
+    </div>
+    <div class="lead-grid">
+      <div class="lead-card">
+        <div class="lead-icon">🏏</div>
+        <div class="lead-title display">Physics Dept Cricket League</div>
+        <div class="lead-desc">Captain · Champions, 2024–25</div>
+      </div>
+      <div class="lead-card">
+        <div class="lead-icon">🏏</div>
+        <div class="lead-title display">Electrical Engineering Association Cricket</div>
+        <div class="lead-desc">Captain · Runners-up, 2024–25</div>
+      </div>
+      <div class="lead-card">
+        <div class="lead-icon">🏏</div>
+        <div class="lead-title display">Inter Department League Cricket</div>
+        <div class="lead-desc">Captain · Runners-up, 2025–26</div>
+      </div>
+      <div class="lead-card">
+        <div class="lead-icon">🥏</div>
+        <div class="lead-title display">Electrical Engineering Association Frisbee</div>
+        <div class="lead-desc">Vice-Captain · Champions, 2025–26</div>
+      </div>
+    </div>
+    <p class="section-desc" style="margin-top:32px;">Led teams across 4 tournaments, evaluating players through multiple sessions, analyzing opponents, testing lineups in match conditions, and adapting strategy based on learnings, securing 2 championships and 2 runner-up finishes.</p>
   </div>
 </section>
 
 <footer id="contact">
   <div class="wrap">
     <div class="footer-inner">
-      <div class="footer-title display">Let's build something worth shipping.</div>
+      <div class="footer-title display">I'm always up for a good conversation about product.</div>
       <div class="footer-links">
         <a href="#" id="linkedin-link">LinkedIn ↗</a>
         <a href="#" id="email-link">Email ↗</a>
@@ -508,18 +585,18 @@
         <a href="#" id="resume-link">Resume ↓</a>
       </div>
     </div>
-    <div class="footer-note">Sai Prasad · IIT Madras · Built with real backends, not mockups</div>
+    <div class="footer-note">Sai Prasad · IIT Madras · This is my journey, not just a resume.</div>
   </div>
 </footer>
 
 <script>
   // Build log ticker — signature element, duplicated for seamless loop
   const items = [
-    { label: "campusguide.site", value: "live" },
-    { label: "Free Rooms", value: "PWA · organic traction" },
-    { label: "RAG Chatbot", value: "FastAPI + ChromaDB" },
-    { label: "Weekly Pulse Agent", value: "automated · weekly" },
-    { label: "NextLeap Fellowship", value: "in progress" },
+    { label: "CampusGuide", value: "260+ users" },
+    { label: "Free Rooms", value: "250+ users" },
+    { label: "Mutual Fund FAQ Assistant", value: "FastAPI + ChromaDB" },
+    { label: "Weekly Product Review Pulse", value: "automated · weekly" },
+    { label: "NextLeap Fellowship", value: "PM Fellow" },
     { label: "Saarang", value: "Super Coordinator" },
   ];
   const track = document.getElementById('buildlog-track');
