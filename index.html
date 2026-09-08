@@ -7,7 +7,7 @@
   <title>Sai Prasad — Product Builder</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link
-    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Lora:ital,wght@0,500;0,600;1,400;1,500&display=swap"
     rel="stylesheet">
   <script>
     const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
@@ -121,7 +121,22 @@
       backdrop-filter: blur(10px);
       background: var(--nav-bg);
       border-bottom: 1px solid var(--border);
-      transition: background 0.3s ease, border-color 0.3s ease;
+      transition: background 0.3s ease, border-color 0.3s ease, margin 0.35s cubic-bezier(0.16,1,0.3,1), border-radius 0.35s cubic-bezier(0.16,1,0.3,1), box-shadow 0.35s ease, max-width 0.35s cubic-bezier(0.16,1,0.3,1);
+    }
+
+    /* Scrolled state — nav detaches into a floating pill, like a business card lifting off the page */
+    nav.is-scrolled {
+      margin: 12px auto 0;
+      max-width: 1000px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      box-shadow: var(--shadow-hover);
+      background: var(--nav-mobile-bg);
+    }
+
+    nav.is-scrolled .wrap {
+      padding-top: 10px;
+      padding-bottom: 10px;
     }
 
     nav .wrap {
@@ -130,6 +145,7 @@
       justify-content: space-between;
       padding-top: 18px;
       padding-bottom: 18px;
+      transition: padding 0.35s cubic-bezier(0.16,1,0.3,1);
     }
 
     .nav-brand {
@@ -411,8 +427,8 @@
       font-family: 'Inter', sans-serif;
       font-weight: 600;
       font-size: 0.92rem;
-      padding: 13px 24px;
-      border-radius: 8px;
+      padding: 13px 26px;
+      border-radius: 999px;
       display: inline-flex;
       align-items: center;
       gap: 8px;
@@ -506,6 +522,65 @@
       font-weight: 700;
     }
 
+    /* MANIFESTO LETTER — editorial callout, breaks from the grid/mono system on purpose */
+    .letter-section {
+      padding: 80px 0 0;
+    }
+
+    .letter-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: clamp(28px, 5vw, 56px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .letter-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding-bottom: 18px;
+      margin-bottom: 26px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .letter-label {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      color: var(--ink);
+      font-size: clamp(1.3rem, 2.4vw, 1.6rem);
+      letter-spacing: -0.01em;
+    }
+
+    .letter-year {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.82rem;
+      color: var(--ink-soft);
+    }
+
+    .letter-body p {
+      font-family: 'Lora', serif;
+      font-size: clamp(1.02rem, 1.6vw, 1.18rem);
+      line-height: 1.75;
+      color: var(--ink);
+      margin-bottom: 18px;
+    }
+
+    .letter-body p:last-child {
+      margin-bottom: 0;
+    }
+
+    .letter-body strong {
+      font-weight: 600;
+      color: var(--signal);
+    }
+
+    .letter-sign {
+      margin-top: 28px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+    }
+
     /* SECTION HEADERS */
     section {
       padding: 88px 0;
@@ -570,6 +645,52 @@
       border: 1px solid var(--border);
       border-radius: 12px;
       padding: 24px;
+      position: sticky;
+      top: 100px;
+    }
+
+    /* Numbered story beats — faded numeral echoes the "01/02/03" feature narrative */
+    .story-step {
+      display: flex;
+      gap: 20px;
+      padding: 22px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .story-step:first-child {
+      padding-top: 0;
+    }
+
+    .story-step:last-of-type {
+      border-bottom: none;
+    }
+
+    .story-num {
+      font-size: 2.1rem;
+      font-weight: 500;
+      color: var(--border);
+      line-height: 1;
+      flex-shrink: 0;
+      width: 2ch;
+    }
+
+    .story-heading {
+      font-weight: 600;
+      font-size: 1.05rem;
+      margin-bottom: 8px;
+    }
+
+    .story-body p {
+      color: var(--ink-soft) !important;
+      font-size: 0.98rem !important;
+      line-height: 1.65 !important;
+      margin-bottom: 0 !important;
+    }
+
+    @media(max-width:800px) {
+      .fact-card {
+        position: static;
+      }
     }
 
     .fact-row {
@@ -734,7 +855,7 @@
       width: fit-content;
       background: var(--signal);
       padding: 11px 20px;
-      border-radius: 8px;
+      border-radius: 999px;
       transition: transform .15s, box-shadow .15s;
     }
 
@@ -921,7 +1042,7 @@
 
     .footer-links a {
       border: 1px solid var(--border);
-      border-radius: 8px;
+      border-radius: 999px;
       padding: 11px 20px;
       font-size: 0.9rem;
       font-weight: 600;
@@ -1039,6 +1160,30 @@
     </div>
   </header>
 
+  <section class="letter-section">
+    <div class="wrap">
+      <div class="letter-card">
+        <div class="letter-head">
+          <span class="letter-label">The story behind this page</span>
+          <span class="letter-year mono">2026</span>
+        </div>
+        <div class="letter-body">
+          <p>To whoever's reading this before an interview, a review, or just out of curiosity.</p>
+          <p>Since my first year, I have cared more about fixing problems that actually bother people, and I have
+            always been better at doing that through people than through a keyboard. I first thought coding was the
+            way to do this, so I spent my first two years there. Then I thought design was the answer, so I explored
+            that in my third year. It was only in my fourth year, when I found product management, that everything
+            made sense. <strong>This was exactly what I had been chasing since the beginning.</strong></p>
+          <p>Looking back, the same pattern shows up everywhere. Leading Safety and Security at Saarang, managing
+            projects at CFI, and captaining my cricket team all needed the same things: understanding people, taking
+            ownership, and staying calm under pressure. That is the real thread running through this page, not just
+            the projects below.</p>
+        </div>
+        <div class="letter-sign">Sai Prasad</div>
+      </div>
+    </div>
+  </section>
+
   <section id="about">
     <div class="wrap">
       <div class="section-head">
@@ -1046,26 +1191,53 @@
       </div>
       <div class="about-grid">
         <div class="about-text">
-          <p>I used college as a testing ground, trying things until something clicked. In my first and second year, I
-            leaned into coding and liked it, but I was mostly building what others asked me to, without much room to
-            think for myself. In my third year, I moved to design, hoping for more creative freedom. It helped, but I
-            noticed design was mostly about making things look and feel right, without really digging into the problem
-            behind it.</p>
-          <p>It was only in my fourth year that I discovered product management, and it felt different right away. It
-            wasn't just one skill. It needed all of them together: understanding the user, the business, the market, and
-            the engineering behind it. That mix is what pulled me in.</p>
-          <p>Thinking back, I'd already been doing this without realizing it: leading the Safety & Security team at
-            <strong>Saarang</strong>, working in project management at <strong>CFI</strong>, and captaining my cricket
-            team. All of it came down to the same things: taking ownership, working with people, and staying calm under
-            pressure.</p>
-          <p>By my fourth year, I knew product was the right path, but I wasn't ready to walk into the corporate world
-            and compete with confidence. So I took a big risk. I added an extra year to my degree, just to get properly
-            ready for product roles. I'm in that year now, and it's been worth it.</p>
-          <div style="display:flex; flex-direction:column; gap:10px; margin-top:8px;">
-            <div class="project-metric">Summary: I tried a lot of things before I found the one that made sense to me.
+
+          <div class="story-step">
+            <div class="story-num mono">01</div>
+            <div class="story-body">
+              <div class="story-heading display">Same want, wrong tool: code</div>
+              <p>From year one, I was drawn to problems worth solving, the kind with a real pain point behind them.
+                In my first two years I leaned into coding, thinking it was the way to get there. I liked it, but I
+                was mostly building what others asked me to, without the room to talk to people and shape the problem
+                myself.</p>
             </div>
-            <div class="project-metric">Takeaway: Give everything to what you're doing. That's how you find what you
-              like.</div>
+          </div>
+
+          <div class="story-step">
+            <div class="story-num mono">02</div>
+            <div class="story-body">
+              <div class="story-heading display">Same want, another tool: design</div>
+              <p>Third year, I moved to design, thinking that was it instead. It got me closer to people and their
+                actual experience, but design was still mostly about making things look and feel right, not about
+                understanding and convincing the people on the other side of the problem.</p>
+            </div>
+          </div>
+
+          <div class="story-step">
+            <div class="story-num mono">03</div>
+            <div class="story-body">
+              <div class="story-heading display">The real name for it: product</div>
+              <p>Fourth year, I found product management and it clicked immediately. This was what I'd been chasing
+                since year one: talking to people, understanding what they actually needed, and convincing them of a
+                solution, backed by the user sense, the business sense, and the engineering to make it real.</p>
+            </div>
+          </div>
+
+          <div class="story-step">
+            <div class="story-num mono">04</div>
+            <div class="story-body">
+              <div class="story-heading display">Betting a year on it</div>
+              <p>I knew product was the right path, but I wasn't ready to compete with confidence. So I took a risk
+                and added an extra year to my degree just to get properly ready. I'm in that year now, and it's been
+                worth it.</p>
+            </div>
+          </div>
+
+          <div style="display:flex; flex-direction:column; gap:10px; margin-top:8px;">
+            <div class="project-metric">Turns out I'd already been doing this without realizing it, leading Safety
+              and Security at <strong style="color:inherit;">Saarang</strong>, project management at <strong
+                style="color:inherit;">CFI</strong>, and captaining my cricket team. Same habits every time: ownership,
+              working with people, staying calm under pressure.</div>
           </div>
         </div>
         <div class="fact-card">
@@ -1299,6 +1471,7 @@
           <a href="#" id="linkedin-link">LinkedIn ↗</a>
           <a href="#" id="email-link">Email ↗</a>
           <a href="#" id="whatsapp-link">WhatsApp ↗</a>
+          <a href="#" id="github-link">GitHub ↗</a>
 
         </div>
       </div>
@@ -1326,7 +1499,16 @@
     document.getElementById('linkedin-link').href = "https://www.linkedin.com/in/sai-prasad-bathula-702966380/";
     document.getElementById('email-link').href = "mailto:bsaiprasad13@gmail.com";
     document.getElementById('whatsapp-link').href = "https://wa.me/919391996812";
+    document.getElementById('github-link').href = "https://github.com/bsaiprasad13-main";
 
+
+    // Nav scroll-shrink — becomes a floating pill after leaving the hero, echoes the Cruitical nav
+    const siteNav = document.querySelector('nav');
+    const onNavScroll = () => {
+      siteNav.classList.toggle('is-scrolled', window.scrollY > 80);
+    };
+    document.addEventListener('scroll', onNavScroll, { passive: true });
+    onNavScroll();
 
     // Theme Toggle Logic
     const themeToggleBtn = document.getElementById('theme-toggle');
