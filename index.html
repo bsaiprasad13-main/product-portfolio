@@ -1822,7 +1822,7 @@
     <div class="assistant-head">
       <div class="assistant-head-text">
         <div class="assistant-name">Chat with Sai</div>
-        <div class="assistant-status">AI version of me · answers from my story</div>
+        <div class="assistant-status">AI version of me</div>
       </div>
       <button class="assistant-close" id="assistant-close" aria-label="Close chat">×</button>
     </div>
@@ -1960,7 +1960,7 @@
       assistantFab.setAttribute('aria-label', open ? 'Close chat assistant' : 'Open chat assistant');
       if (open) {
         if (!assistantMessages.children.length) {
-          addAssistantMessage("Hi, I'm Sai! Well, an AI version of me, built from my story. Ask me about what I've built, how I got into product, or anything on this page.", 'bot');
+          addAssistantMessage("Hi, I'm Sai! Well, an AI version of me. Ask me about what I've built, how I got into product, or anything on this page.", 'bot');
         }
         assistantInput.focus();
       }
