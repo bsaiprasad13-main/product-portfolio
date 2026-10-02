@@ -1818,24 +1818,24 @@
     </svg>
   </button>
 
-  <div class="assistant-panel" id="assistant-panel" role="dialog" aria-label="Chat with Sai's assistant">
+  <div class="assistant-panel" id="assistant-panel" role="dialog" aria-label="Chat with an AI version of Sai">
     <div class="assistant-head">
       <div class="assistant-head-text">
-        <div class="assistant-name">Ask about Sai</div>
-        <div class="assistant-status">AI assistant · answers from this portfolio</div>
+        <div class="assistant-name">Chat with Sai</div>
+        <div class="assistant-status">AI version of me · answers from my story</div>
       </div>
       <button class="assistant-close" id="assistant-close" aria-label="Close chat">×</button>
     </div>
     <div class="assistant-messages" id="assistant-messages" aria-live="polite"></div>
     <div class="assistant-chips" id="assistant-chips">
-      <button class="assistant-chip">What has Sai shipped?</button>
+      <button class="assistant-chip">What have you shipped?</button>
       <button class="assistant-chip">Why product management?</button>
-      <button class="assistant-chip">Leadership experience?</button>
-      <button class="assistant-chip">How do I contact Sai?</button>
+      <button class="assistant-chip">Tell me about your leadership</button>
+      <button class="assistant-chip">How can I reach you?</button>
     </div>
     <form class="assistant-form" id="assistant-form">
       <input class="assistant-input" id="assistant-input" type="text" maxlength="500" autocomplete="off"
-        placeholder="Ask me anything about Sai…" aria-label="Your message">
+        placeholder="Ask me anything…" aria-label="Your message">
       <button class="assistant-send" id="assistant-send" type="submit" aria-label="Send message">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
           stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1947,7 +1947,7 @@
       assistantFab.setAttribute('aria-label', open ? 'Close chat assistant' : 'Open chat assistant');
       if (open) {
         if (!assistantMessages.children.length) {
-          addAssistantMessage("Hi! I'm Sai's assistant. Ask me about his products, projects, experience, or how to reach him.", 'bot');
+          addAssistantMessage("Hi, I'm Sai! Well, an AI version of me, built from my story. Ask me about what I've built, how I got into product, or anything on this page.", 'bot');
         }
         assistantInput.focus();
       }
@@ -1987,7 +1987,7 @@
         const reason = err.message === 'offline' || err instanceof TypeError
           ? "I'm offline right now."
           : err.message;
-        addAssistantMessage(`${reason} You can reach Sai directly at bsaiprasad13@gmail.com or https://www.linkedin.com/in/sai-prasad-bathula-702966380/`, 'bot error');
+        addAssistantMessage(`${reason} You can reach me directly at bsaiprasad13@gmail.com or https://www.linkedin.com/in/sai-prasad-bathula-702966380/`, 'bot error');
       } finally {
         assistantBusy = false;
         assistantSend.disabled = false;

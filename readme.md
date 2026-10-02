@@ -46,7 +46,7 @@ Open `index.html` in any modern browser.
 
 ## Portfolio Assistant (AI chatbot)
 
-The floating chat button in the bottom-right corner opens an AI assistant that answers visitors' questions about me. It uses Groq (Llama 3.3) and answers only from my portfolio content.
+The floating chat button in the bottom-right corner opens an AI assistant that answers visitors' questions in my voice, as an AI version of me. It uses Groq (Llama 3.3) and answers only from my portfolio content.
 
 How it works:
 - **Frontend** (`index.html`): the chat button and panel. It sends the conversation to the backend URL set in `ASSISTANT_ENDPOINT`.
