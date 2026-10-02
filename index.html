@@ -1401,6 +1401,97 @@
       }
     }
 
+    /* Kitten that chases the cursor */
+    .kitten {
+      position: fixed;
+      left: 0;
+      top: 0;
+      z-index: 150;
+      width: 72px;
+      pointer-events: none;
+      user-select: none;
+      will-change: transform;
+    }
+
+    .kitten-body {
+      transform-origin: 50% 100%;
+    }
+
+    .kitten-sprite {
+      display: block;
+      width: 100%;
+      height: auto;
+      transform-origin: 50% 100%;
+      -webkit-user-drag: none;
+    }
+
+    .kitten.is-sitting .kitten-sprite {
+      animation: kitten-breathe 2.4s ease-in-out infinite;
+    }
+
+    .kitten.is-sleeping .kitten-sprite {
+      animation: kitten-breathe 3.6s ease-in-out infinite;
+    }
+
+    .kitten-zzz {
+      position: absolute;
+      top: -10px;
+      left: 6px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--ink-soft);
+      opacity: 0;
+    }
+
+    .kitten.faces-right .kitten-zzz {
+      left: auto;
+      right: 6px;
+    }
+
+    .kitten.is-sleeping .kitten-zzz {
+      animation: kitten-zzz 2.6s ease-in-out infinite;
+    }
+
+    @keyframes kitten-breathe {
+      0%, 100% {
+        transform: scale(1, 1);
+      }
+
+      50% {
+        transform: scale(1.02, 0.97);
+      }
+    }
+
+    @keyframes kitten-zzz {
+      0% {
+        opacity: 0;
+        transform: translateY(4px);
+      }
+
+      40% {
+        opacity: 1;
+      }
+
+      100% {
+        opacity: 0;
+        transform: translateY(-14px);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .kitten {
+        width: 56px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .kitten-sprite,
+      .kitten-zzz {
+        animation: none !important;
+      }
+    }
+
   </style>
 </head>
 
@@ -1812,6 +1903,12 @@
     </div>
   </footer>
 
+  <!-- Kitten that chases the cursor -->
+  <div class="kitten" id="kitten" aria-hidden="true">
+    <div class="kitten-body"><img class="kitten-sprite" src="kitten.png" alt="" draggable="false"></div>
+    <span class="kitten-zzz">z z</span>
+  </div>
+
   <!-- Portfolio assistant -->
   <button class="assistant-fab" id="assistant-fab" aria-label="Open chat assistant" aria-expanded="false"
     aria-controls="assistant-panel">
@@ -2069,6 +2166,98 @@
     assistantChips.querySelectorAll('.assistant-chip').forEach(chip => {
       chip.addEventListener('click', () => askAssistant(chip.textContent));
     });
+
+    // Kitten that chases the cursor (taps on touch screens); sits when it catches up, naps when left alone
+    (() => {
+      const kitten = document.getElementById('kitten');
+      const body = kitten.querySelector('.kitten-body');
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const SPEED = 340;      // px per second
+      const STOP_GAP = 56;    // how close it sits to the cursor
+      const NAP_AFTER = 8000; // ms of stillness before it falls asleep
+      const MARGIN = 12;
+
+      let w = kitten.offsetWidth || 72;
+      let h = w * 0.75;
+      let x = MARGIN;
+      let y = window.innerHeight - h - MARGIN;
+      let tx = x, ty = y;
+      let facingLeft = true;  // the drawing faces left
+      let stride = 0;
+      let restingSince = performance.now();
+      let state = '';
+      let last = performance.now();
+
+      function setState(next) {
+        if (next === state) return;
+        kitten.classList.remove('is-running', 'is-sitting', 'is-sleeping');
+        kitten.classList.add(`is-${next}`);
+        state = next;
+      }
+
+      function clampToViewport() {
+        x = Math.min(Math.max(x, MARGIN), window.innerWidth - w - MARGIN);
+        y = Math.min(Math.max(y, MARGIN), window.innerHeight - h - MARGIN);
+      }
+
+      function render(hop) {
+        kitten.style.transform = `translate(${x}px, ${y}px)`;
+        body.style.transform = `translateY(${hop}px) scaleX(${facingLeft ? 1 : -1})`;
+        kitten.classList.toggle('faces-right', !facingLeft);
+      }
+
+      function measure() {
+        w = kitten.offsetWidth || w;
+        h = kitten.offsetHeight || h;
+      }
+
+      function chase(clientX, clientY) {
+        tx = clientX - w / 2;
+        ty = clientY - h / 2;
+      }
+
+      measure();
+      clampToViewport();
+      render(0);
+      setState('sitting');
+      kitten.querySelector('img').addEventListener('load', () => { measure(); clampToViewport(); render(0); });
+      window.addEventListener('resize', () => { measure(); clampToViewport(); render(0); });
+      if (reduceMotion) return; // stays sitting quietly in the corner
+
+      document.addEventListener('pointermove', (e) => {
+        if (e.pointerType === 'mouse') chase(e.clientX, e.clientY);
+      }, { passive: true });
+      document.addEventListener('pointerdown', (e) => {
+        if (e.pointerType !== 'mouse') chase(e.clientX, e.clientY);
+      }, { passive: true });
+
+      function tick(now) {
+        const dt = Math.min((now - last) / 1000, 0.05);
+        last = now;
+        const dx = tx - x;
+        const dy = ty - y;
+        const dist = Math.hypot(dx, dy);
+
+        if (dist > STOP_GAP) {
+          const step = Math.min(SPEED * dt, dist - STOP_GAP);
+          x += (dx / dist) * step;
+          y += (dy / dist) * step;
+          clampToViewport();
+          if (Math.abs(dx) > 4) facingLeft = dx < 0;
+          stride += step;
+          restingSince = now;
+          setState('running');
+          render(-Math.abs(Math.sin(stride / 16)) * 7);
+        } else if (state === 'running') {
+          setState('sitting');
+          render(0);
+        } else if (state === 'sitting' && now - restingSince > NAP_AFTER) {
+          setState('sleeping');
+        }
+        requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    })();
   </script>
 
 </body>
