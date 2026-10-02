@@ -1,0 +1,53 @@
+SAI'S STORY
+(Sai's own account of his journey, edited for clarity. Use it to answer "why", "how", and "what did you learn" questions.)
+
+CHOOSING IIT MADRAS
+- His journey really started during JEE counselling. He called friends and seniors, researched on YouTube, and worked out which colleges and departments his rank could get him.
+- He was clear about one thing: he wanted to be around great people and great minds. So he prioritized the institute over the branch, knowing that a department alone would limit what he could explore.
+- Many of his seniors were at IIT Madras, one of them guided him, and he could get Physics there, a subject he enjoyed. So he chose IIT Madras.
+- His mindset going in: explore everything possible, meet as many people as possible, and learn from the people around him.
+
+FIRST YEARS: EXPLORING
+- In his first year he focused on trying new things. He made a deliberate trade-off to prioritize exploring over grades early on.
+- He met many seniors and students from different departments. A strength he's had since childhood is holding good conversations: asking good questions and making people engage, which helped him learn from everyone around him.
+- He joined the Safety & Security (SNS) team at Saarang and the project management team at CFI, and played sports alongside.
+- On the tech side, he learned Python and frontend development. He loved building things and seeing the output of his code come to life.
+- By his fourth semester he realized he cared more about what to build and why than about how to build it. He moved away from coding.
+
+DESIGN, AND GETTING CLOSER TO USERS
+- In his fifth semester he tried design and editing.
+- In his sixth semester he discovered UI/UX design, where you understand the user and design for them. Thinking from the user's perspective (what problems they face, how well you understand them) excited him much more. He learned from Google and YouTube courses and practiced in Figma.
+
+FINDING PRODUCT MANAGEMENT
+- In his seventh semester, a "What is a product manager?" video appeared in his YouTube feed. He learned that PMs focus on the "why", not the "how": why we are building this, why this and not that, understanding users, and understanding the business.
+- He realized this was exactly what he had been chasing since his first year.
+- He didn't jump in blindly. He researched what the role is, what the day-to-day work looks like, and what topics he would need to learn, and checked it against what he already enjoyed: handling people, talking to people, convincing them, and seeing things from different perspectives.
+
+THE BIG DECISION: THE EXTENSION YEAR
+- He had two options: (1) prepare for software placements and finish his remaining courses in one year, or (2) extend his B.Tech by a year, finish courses over two years, and prepare properly for product roles.
+- He chose the extension. It was a calculated risk, guided by a principle he has held throughout college: make decisions he won't regret years later.
+- He started learning PM with whatever was available: YouTube channels, guidance from people he knew, and a product management course at college that taught him the fundamentals of user research, problem framing, understanding and interviewing users, drawing insights from research, and shaping solutions.
+
+FREE ROOMS: HIS FIRST PRODUCT
+- Using AI tools, including Claude, he built Free Rooms, a simple web app that solves a pain point he faced himself: finding an empty classroom between classes.
+- He launched it himself: designed a poster and shared it across WhatsApp groups and his network. It reached 250+ users in 2 weeks.
+- He launched near the end of the semester, so usage naturally dropped as the semester ended. He took that as a lesson and planned to make the product better for the next semester.
+
+CAMPUSGUIDE: FROM A PERSONAL PROBLEM TO USER RESEARCH
+- Around this time he enrolled in the NextLeap PM Fellowship to learn product management more deeply.
+- In his fourth year he had a realization: over three years he had met lots of people, but his real exposure to what the college offered was low. Quantity of contacts, not quality of information. For example, he only learned in his fourth year that there was a product-focused team at college.
+- Instead of assuming everyone had his problem, he tested it. He ran 30+ focused one-on-one interviews with first, second, and third-year students and alumni, all aimed at one question: what is the main problem students face?
+- He heard many different problems: finding resources for exam preparation, not knowing how to prepare for internships, not knowing what to prepare, not knowing which teams to join, and struggling to manage everything.
+- Comparing them, he found the common root: students weren't getting wrong information, they weren't getting enough of the right information at the right time. The problem to solve was making college information accessible to every student.
+- His first idea was an AI chatbot. But he had a hard budget constraint, and paying for LLM calls on every question wasn't sustainable, so he pivoted to a simpler solution.
+- He built CampusGuide as a Discord server: one place with organized categories and channels covering scholarships, college teams, hostel and campus facilities, and how the college system works, so students know what to do next, whom to contact, and what to choose.
+- To keep it trusted, he built a verification layer: students verify with their IITM student email via an OTP before getting full access.
+- He collected and organized the information in June, built the verification system in July, and launched through WhatsApp groups, LinkedIn, and freshers who shared it with others. CampusGuide reached 260+ active users. He sees it as a starting point, not a finished product.
+
+BUILDING WITH AI TOOLS
+- Through building, he got comfortable with GitHub, deploying on Railway, and AI coding tools like Antigravity.
+- In September he switched to Claude Code, which made it much easier to give context, work with files, and keep track of work, so he now builds much faster.
+
+WHERE HE IS NOW
+- He is preparing for college placements, with interviews in December, and is fully committed to product management roles.
+- His preparation focuses on the problem side rather than on building solutions: structuring problems, understanding them deeply, problem solving, and prioritization.
