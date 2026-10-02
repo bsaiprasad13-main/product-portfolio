@@ -43,3 +43,27 @@ Open `index.html` in any modern browser.
 - LinkedIn: [sai-prasad-bathula](https://www.linkedin.com/in/sai-prasad-bathula-702966380/)
 - Email: [bsaiprasad13@gmail.com](mailto:bsaiprasad13@gmail.com)
 - GitHub: [bsaiprasad13-main](https://github.com/bsaiprasad13-main)
+
+## Portfolio Assistant (AI chatbot)
+
+The floating chat button in the bottom-right corner opens an AI assistant that answers visitors' questions about me. It uses Groq (Llama 3.3) and answers only from my portfolio content.
+
+How it works:
+- **Frontend** (`index.html`): the chat button and panel. It sends the conversation to the backend URL set in `ASSISTANT_ENDPOINT`.
+- **Backend** (`worker/`): a small Cloudflare Worker that stores the Groq API key as a secret, adds my portfolio facts as context, and calls Groq. It only accepts requests from the sites in `ALLOWED_ORIGINS`, keeps up to 10 messages of history, trims each message to 500 characters, and limits each visitor to 20 messages a minute.
+
+If `ASSISTANT_ENDPOINT` is empty or the backend is down, the chat replies with my email and LinkedIn instead.
+
+### Setup (one time)
+1. Get a free API key at [console.groq.com](https://console.groq.com/keys).
+2. Deploy the Worker (this needs a free Cloudflare account):
+   ```bash
+   cd worker
+   npx wrangler login
+   npx wrangler secret put GROQ_API_KEY
+   npx wrangler deploy
+   ```
+3. Copy the `https://portfolio-assistant.<you>.workers.dev` URL it prints into `ASSISTANT_ENDPOINT` in `index.html`.
+4. If the site is served from somewhere other than `https://bsaiprasad13-main.github.io`, add that origin to `ALLOWED_ORIGINS` in `worker/wrangler.toml` and deploy again.
+
+**Updating what the assistant knows:** edit `SYSTEM_PROMPT` in `worker/worker.js` whenever the site content changes, then run `npx wrangler deploy`.

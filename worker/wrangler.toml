@@ -1,0 +1,17 @@
+name = "portfolio-assistant"
+main = "worker.js"
+compatibility_date = "2026-09-01"
+
+[vars]
+# Sites allowed to call the assistant (comma-separated origins, no trailing slash).
+ALLOWED_ORIGINS = "https://bsaiprasad13-main.github.io,http://localhost:8000,http://127.0.0.1:8000"
+GROQ_MODEL = "llama-3.3-70b-versatile"
+
+# Per-visitor limit: 20 messages per minute per IP.
+[[ratelimits]]
+name = "RATE_LIMITER"
+namespace_id = "1001"
+
+  [ratelimits.simple]
+  limit = 20
+  period = 60
