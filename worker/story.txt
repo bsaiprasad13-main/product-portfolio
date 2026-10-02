@@ -49,5 +49,6 @@ BUILDING WITH AI TOOLS
 - In September he switched to Claude Code, which made it much easier to give context, work with files, and keep track of work, so he now builds much faster.
 
 WHERE HE IS NOW
+- He is now in his 5th year of B.Tech, the extension year he chose.
 - He is preparing for college placements, with interviews in December, and is fully committed to product management roles.
 - His preparation focuses on the problem side rather than on building solutions: structuring problems, understanding them deeply, problem solving, and prioritization.
