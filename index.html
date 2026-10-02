@@ -1904,8 +1904,8 @@
     });
 
     // Portfolio assistant — chat UI that talks to the Cloudflare Worker in /worker
-    // Paste your deployed Worker URL here (e.g. https://portfolio-assistant.<you>.workers.dev)
-    const ASSISTANT_ENDPOINT = "";
+    // Deployed Worker URL (see worker/ and the README)
+    const ASSISTANT_ENDPOINT = "https://portfolio-assistant.saiprasad.workers.dev";
 
     const assistantFab = document.getElementById('assistant-fab');
     const assistantPanel = document.getElementById('assistant-panel');
@@ -1918,12 +1918,10 @@
     let assistantBusy = false;
 
     // Render text safely (no innerHTML), turning URLs and emails into links
-    function addAssistantMessage(text, kind) {
-      const msg = document.createElement('div');
-      msg.className = `assistant-msg ${kind}`;
+    function appendLinkedText(parent, text) {
       text.split(/(https?:\/\/[^\s)]+|[\w.+-]+@[\w-]+\.[\w.]+)/g).forEach((part, i) => {
         if (i % 2 === 0) {
-          msg.appendChild(document.createTextNode(part));
+          parent.appendChild(document.createTextNode(part));
           return;
         }
         const url = part.replace(/[.,]+$/, '');
@@ -1932,8 +1930,23 @@
         a.textContent = url;
         a.target = '_blank';
         a.rel = 'noopener';
-        msg.appendChild(a);
-        if (url !== part) msg.appendChild(document.createTextNode(part.slice(url.length)));
+        parent.appendChild(a);
+        if (url !== part) parent.appendChild(document.createTextNode(part.slice(url.length)));
+      });
+    }
+
+    // Also render **bold** from the model's replies
+    function addAssistantMessage(text, kind) {
+      const msg = document.createElement('div');
+      msg.className = `assistant-msg ${kind}`;
+      text.split(/\*\*([^*\n]+)\*\*/g).forEach((part, i) => {
+        if (i % 2 === 0) {
+          appendLinkedText(msg, part);
+          return;
+        }
+        const strong = document.createElement('strong');
+        appendLinkedText(strong, part);
+        msg.appendChild(strong);
       });
       assistantMessages.appendChild(msg);
       assistantMessages.scrollTop = assistantMessages.scrollHeight;
