@@ -24,7 +24,7 @@ The site is one page (`index.html`) written in plain HTML, CSS, and JavaScript. 
 - HTML5
 - CSS3 (custom properties, Flexbox, CSS Grid, responsive layout)
 - Light and dark themes; the choice is saved in `localStorage` and follows the system setting by default
-- Vanilla JavaScript for the build log ticker, the nav that shrinks on scroll, the theme toggle, and the mobile menu
+- Vanilla JavaScript for the build log ticker, the nav that shrinks on scroll, the theme toggle, the mobile menu, and a kitten (`kitten.png`) that chases the cursor (or taps on phones), sits when it catches up, and naps when left alone
 - Fonts: Space Grotesk, Inter, IBM Plex Mono, Lora (from Google Fonts)
 
 ## Project Structure
