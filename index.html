@@ -1313,7 +1313,15 @@
       padding: 0 16px 12px;
     }
 
+    .assistant-followups {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      max-width: 92%;
+    }
+
     .assistant-chip {
+      text-align: left;
       font-family: 'Inter', sans-serif;
       font-size: 0.8rem;
       padding: 6px 12px;
@@ -1822,7 +1830,7 @@
     <div class="assistant-head">
       <div class="assistant-head-text">
         <div class="assistant-name">Chat with Sai</div>
-        <div class="assistant-status">AI version of me · answers from my story</div>
+        <div class="assistant-status">AI version of me</div>
       </div>
       <button class="assistant-close" id="assistant-close" aria-label="Close chat">×</button>
     </div>
@@ -1960,10 +1968,41 @@
       assistantFab.setAttribute('aria-label', open ? 'Close chat assistant' : 'Open chat assistant');
       if (open) {
         if (!assistantMessages.children.length) {
-          addAssistantMessage("Hi, I'm Sai! Well, an AI version of me, built from my story. Ask me about what I've built, how I got into product, or anything on this page.", 'bot');
+          addAssistantMessage("Hi, I'm Sai! Well, an AI version of me. Ask me about what I've built, how I got into product, or anything on this page.", 'bot');
         }
         assistantInput.focus();
       }
+    }
+
+    // Fallback follow-ups when the model doesn't suggest any
+    const suggestedQuestions = [
+      'What have you shipped?',
+      'Why product management?',
+      'How did you come up with CampusGuide?',
+      'Why did you extend your B.Tech?',
+      'Tell me about your leadership',
+      'What did you learn from Free Rooms?',
+      'What are you focusing on now?',
+      'How can I reach you?',
+    ];
+    const askedQuestions = new Set();
+
+    function showFollowups(questions) {
+      const fresh = questions.filter(q => !askedQuestions.has(q.toLowerCase()));
+      const pool = suggestedQuestions.filter(q => !askedQuestions.has(q.toLowerCase()) && !fresh.includes(q));
+      const picks = [...fresh, ...pool].slice(0, 3);
+      if (!picks.length) return;
+      const row = document.createElement('div');
+      row.className = 'assistant-followups';
+      picks.forEach(q => {
+        const chip = document.createElement('button');
+        chip.className = 'assistant-chip';
+        chip.textContent = q;
+        chip.addEventListener('click', () => askAssistant(q));
+        row.appendChild(chip);
+      });
+      assistantMessages.appendChild(row);
+      assistantMessages.scrollTop = assistantMessages.scrollHeight;
     }
 
     async function askAssistant(question) {
@@ -1972,6 +2011,8 @@
       assistantBusy = true;
       assistantSend.disabled = true;
       assistantChips.style.display = 'none';
+      assistantMessages.querySelectorAll('.assistant-followups').forEach(row => row.remove());
+      askedQuestions.add(question.toLowerCase());
       addAssistantMessage(question, 'user');
       chatHistory.push({ role: 'user', content: question });
       assistantInput.value = '';
@@ -1994,6 +2035,7 @@
         typing.remove();
         addAssistantMessage(data.reply, 'bot');
         chatHistory.push({ role: 'assistant', content: data.reply });
+        showFollowups(Array.isArray(data.followups) ? data.followups : []);
       } catch (err) {
         typing.remove();
         chatHistory.pop();
@@ -2004,7 +2046,8 @@
       } finally {
         assistantBusy = false;
         assistantSend.disabled = false;
-        assistantInput.focus();
+        // On phones, refocusing would pop the keyboard over the follow-up chips
+        if (!window.matchMedia('(pointer: coarse)').matches) assistantInput.focus();
       }
     }
 

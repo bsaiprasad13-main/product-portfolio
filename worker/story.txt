@@ -37,11 +37,13 @@ CAMPUSGUIDE: FROM A PERSONAL PROBLEM TO USER RESEARCH
 - Around this time he enrolled in the NextLeap PM Fellowship to learn product management more deeply.
 - In his fourth year he had a realization: over three years he had met lots of people, but his real exposure to what the college offered was low. Quantity of contacts, not quality of information. For example, he only learned in his fourth year that there was a product-focused team at college.
 - Instead of assuming everyone had his problem, he tested it. He ran 30+ focused one-on-one interviews with first, second, and third-year students and alumni, all aimed at one question: what is the main problem students face?
+- He took notes on the key insights from each interview (written notes, not audio recordings), then looked across them for common themes.
 - He heard many different problems: finding resources for exam preparation, not knowing how to prepare for internships, not knowing what to prepare, not knowing which teams to join, and struggling to manage everything.
 - Comparing them, he found the common root: students weren't getting wrong information, they weren't getting enough of the right information at the right time. The problem to solve was making college information accessible to every student.
 - His first idea was an AI chatbot. But he had a hard budget constraint, and paying for LLM calls on every question wasn't sustainable, so he pivoted to a simpler solution.
 - He built CampusGuide as a Discord server: one place with organized categories and channels covering scholarships, college teams, hostel and campus facilities, and how the college system works, so students know what to do next, whom to contact, and what to choose.
 - To keep it trusted, he built a verification layer: students verify with their IITM student email via an OTP before getting full access.
+- After launch, he kept iterating on the Discord server's structure (categories and channels) based on early feedback from users.
 - He collected and organized the information in June, built the verification system in July, and launched through WhatsApp groups, LinkedIn, and freshers who shared it with others. CampusGuide reached 260+ active users. He sees it as a starting point, not a finished product.
 
 BUILDING WITH AI TOOLS
@@ -49,5 +51,6 @@ BUILDING WITH AI TOOLS
 - In September he switched to Claude Code, which made it much easier to give context, work with files, and keep track of work, so he now builds much faster.
 
 WHERE HE IS NOW
+- He is now in his 5th year of B.Tech, the extension year he chose.
 - He is preparing for college placements, with interviews in December, and is fully committed to product management roles.
 - His preparation focuses on the problem side rather than on building solutions: structuring problems, understanding them deeply, problem solving, and prioritization.
