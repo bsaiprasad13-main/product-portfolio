@@ -8,7 +8,7 @@
 
 (function oneko() {
   // Tunable constants
-  const NEKO_SPEED = 300;       // px per second while running (original: 100)
+  const NEKO_SPEED = 200;       // px per second while running (original: 100)
   const STOP_DISTANCE = 24;     // sits when this close to the cursor (original: 48)
   const ALERT_FRAMES = 3;       // alert pose before running, in 100 ms frames (original: up to 6)
   const ARRIVE_TOLERANCE = 0.5; // px; counts as arrived this close to STOP_DISTANCE

@@ -81,7 +81,7 @@ Tunable constants at the top of `oneko.js`:
 
 | Constant | Default | Original | What it does |
 | :--- | :--- | :--- | :--- |
-| `NEKO_SPEED` | `300` | `100` | Running speed in px per second |
+| `NEKO_SPEED` | `200` | `100` | Running speed in px per second |
 | `STOP_DISTANCE` | `24` | `48` | How close (px) it sits to the cursor |
 | `ALERT_FRAMES` | `3` | up to `6` | Alert pose before running, in 100 ms frames |
 | `BLOB_SIZE` | `28` | none | Diameter (px) of the circle trailing the cursor |
