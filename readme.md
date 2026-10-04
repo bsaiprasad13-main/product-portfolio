@@ -70,4 +70,19 @@ If `ASSISTANT_ENDPOINT` is empty or the backend is down, the chat replies with m
 
 ## Oneko Cat
 
-The little pixel cat that chases your cursor is [oneko.js](https://github.com/adryd325/oneko.js) by adryd (MIT License, see `oneko-LICENSE.txt`), a web version of the classic Neko desktop cat. It's loaded with `oneko.js` and the sprite `oneko.gif`. The only change from the original is a lower z-index (150 instead of the maximum), so the cat stays below the chat assistant.
+The little pixel cat that chases your cursor is [oneko.js](https://github.com/adryd325/oneko.js) by adryd (MIT License, see `oneko-LICENSE.txt`), a web version of the classic Neko desktop cat. It's loaded with `oneko.js` and the sprite `oneko.gif`.
+
+Changes from the original:
+- It moves smoothly every frame and reacts faster. Sprites still change at the classic 10 fps.
+- A soft grey circle trails the mouse cursor.
+- Its z-index is 150 instead of the maximum, so it stays below the chat assistant.
+
+Tunable constants at the top of `oneko.js`:
+
+| Constant | Default | Original | What it does |
+| :--- | :--- | :--- | :--- |
+| `NEKO_SPEED` | `300` | `100` | Running speed in px per second |
+| `STOP_DISTANCE` | `24` | `48` | How close (px) it sits to the cursor |
+| `ALERT_FRAMES` | `3` | up to `6` | Alert pose before running, in 100 ms frames |
+| `BLOB_SIZE` | `28` | none | Diameter (px) of the circle trailing the cursor |
+| `BLOB_LERP` | `0.2` | none | Circle easing per frame (lower = more lag) |

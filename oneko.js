@@ -1,9 +1,19 @@
 // oneko.js: https://github.com/adryd325/oneko.js
 // Copyright (c) 2022 adryd. MIT License, see oneko-LICENSE.txt.
-// Modified for this site: z-index lowered from the maximum to 150 so the cat stays
-// below the chat assistant (z-index 200).
+// Modified for this site:
+// - z-index lowered from the maximum to 150 so the cat stays below the chat assistant (200)
+// - smooth movement every animation frame (sprites still change at the classic 10 fps)
+// - faster, closer, quicker to react (see the tunable constants below)
+// - a soft grey circle that trails the mouse cursor
 
 (function oneko() {
+  // Tunable constants
+  const NEKO_SPEED = 300;       // px per second while running (original: 100)
+  const STOP_DISTANCE = 24;     // sits when this close to the cursor (original: 48)
+  const ALERT_FRAMES = 3;       // alert pose before running, in 100 ms frames (original: up to 6)
+  const BLOB_SIZE = 28;         // px, the circle that trails the cursor
+  const BLOB_LERP = 0.2;        // circle easing per 60 fps frame (lower = more lag)
+
   const isReducedMotion =
     window.matchMedia(`(prefers-reduced-motion: reduce)`) === true ||
     window.matchMedia(`(prefers-reduced-motion: reduce)`).matches === true;
@@ -11,6 +21,10 @@
   if (isReducedMotion) return;
 
   const nekoEl = document.createElement("div");
+  const blobEl = document.createElement("div");
+  let blobX = 0;
+  let blobY = 0;
+  let blobVisible = false;
   let persistPosition = true;
 
   let nekoPosX = 32;
@@ -24,7 +38,9 @@
   let idleAnimation = null;
   let idleAnimationFrame = 0;
 
-  const nekoSpeed = 10;
+  let running = false;
+  let runDirX = 0;
+  let runDirY = 0;
   const spriteSets = {
     idle: [[-3, -3]],
     alert: [[-7, -3]],
@@ -132,9 +148,40 @@
     
     document.body.appendChild(nekoEl);
 
+    // Soft grey circle that trails the mouse cursor
+    blobEl.ariaHidden = true;
+    Object.assign(blobEl.style, {
+      position: "fixed",
+      left: "0",
+      top: "0",
+      width: `${BLOB_SIZE}px`,
+      height: `${BLOB_SIZE}px`,
+      borderRadius: "50%",
+      background: "rgba(200, 200, 210, 0.45)",
+      boxShadow: "0 1px 6px rgba(0, 0, 0, 0.12)",
+      filter: "blur(1px)",
+      pointerEvents: "none",
+      zIndex: 149,
+      opacity: "0",
+      transition: "opacity 0.2s",
+      willChange: "transform",
+    });
+    document.body.appendChild(blobEl);
+
     document.addEventListener("mousemove", function (event) {
       mousePosX = event.clientX;
       mousePosY = event.clientY;
+      if (!blobVisible) {
+        blobX = mousePosX;
+        blobY = mousePosY;
+        blobVisible = true;
+        blobEl.style.opacity = "1";
+      }
+    });
+    document.addEventListener("mouseout", function (event) {
+      if (event.relatedTarget) return; // still inside the page
+      blobVisible = false;
+      blobEl.style.opacity = "0";
     });
     
     if (persistPosition) {
@@ -157,6 +204,7 @@
   }
 
   let lastFrameTimestamp;
+  let lastMoveTimestamp;
 
   function onAnimationFrame(timestamp) {
     // Stops execution if the neko element is removed from DOM
@@ -166,11 +214,47 @@
     if (!lastFrameTimestamp) {
       lastFrameTimestamp = timestamp;
     }
+    if (!lastMoveTimestamp) {
+      lastMoveTimestamp = timestamp;
+    }
+    const dt = Math.min((timestamp - lastMoveTimestamp) / 1000, 0.1);
+    lastMoveTimestamp = timestamp;
+
+    // Sprite and state changes keep the classic 10 fps rhythm
     if (timestamp - lastFrameTimestamp > 100) {
       lastFrameTimestamp = timestamp;
       frame();
     }
+    // Position updates every frame, so running looks smooth
+    if (running) {
+      move(dt);
+    }
+    if (blobVisible) {
+      const k = 1 - Math.pow(1 - BLOB_LERP, dt * 60);
+      blobX += (mousePosX - blobX) * k;
+      blobY += (mousePosY - blobY) * k;
+      blobEl.style.transform = `translate(${blobX - BLOB_SIZE / 2}px, ${blobY - BLOB_SIZE / 2}px)`;
+    }
     window.requestAnimationFrame(onAnimationFrame);
+  }
+
+  function move(dt) {
+    const diffX = mousePosX - nekoPosX;
+    const diffY = mousePosY - nekoPosY;
+    const distance = Math.sqrt(diffX ** 2 + diffY ** 2);
+    if (distance <= STOP_DISTANCE) {
+      running = false;
+      return;
+    }
+    const step = Math.min(NEKO_SPEED * dt, distance - STOP_DISTANCE);
+    nekoPosX += (diffX / distance) * step;
+    nekoPosY += (diffY / distance) * step;
+
+    nekoPosX = Math.min(Math.max(16, nekoPosX), window.innerWidth - 16);
+    nekoPosY = Math.min(Math.max(16, nekoPosY), window.innerHeight - 16);
+
+    nekoEl.style.left = `${nekoPosX - 16}px`;
+    nekoEl.style.top = `${nekoPosY - 16}px`;
   }
 
   function setSprite(name, frame) {
@@ -245,7 +329,9 @@
     const diffY = nekoPosY - mousePosY;
     const distance = Math.sqrt(diffX ** 2 + diffY ** 2);
 
-    if (distance < nekoSpeed || distance < 48) {
+    // While sitting, ignore small cursor jitters (8px of slack) so it doesn't hop back and forth
+    if (distance <= STOP_DISTANCE + (running ? 0 : 8)) {
+      running = false;
       idle();
       return;
     }
@@ -254,9 +340,10 @@
     idleAnimationFrame = 0;
 
     if (idleTime > 1) {
+      running = false;
       setSprite("alert", 0);
       // count down after being alerted before moving
-      idleTime = Math.min(idleTime, 7);
+      idleTime = Math.min(idleTime, ALERT_FRAMES + 1);
       idleTime -= 1;
       return;
     }
@@ -268,14 +355,8 @@
     direction += diffX / distance < -0.5 ? "E" : "";
     setSprite(direction, frameCount);
 
-    nekoPosX -= (diffX / distance) * nekoSpeed;
-    nekoPosY -= (diffY / distance) * nekoSpeed;
-
-    nekoPosX = Math.min(Math.max(16, nekoPosX), window.innerWidth - 16);
-    nekoPosY = Math.min(Math.max(16, nekoPosY), window.innerHeight - 16);
-
-    nekoEl.style.left = `${nekoPosX - 16}px`;
-    nekoEl.style.top = `${nekoPosY - 16}px`;
+    // Movement itself happens every animation frame in move()
+    running = true;
   }
 
   init();
