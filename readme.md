@@ -67,3 +67,24 @@ If `ASSISTANT_ENDPOINT` is empty or the backend is down, the chat replies with m
 4. If the site is served from somewhere other than `https://bsaiprasad13-main.github.io`, add that origin to `ALLOWED_ORIGINS` in `worker/wrangler.toml` and deploy again.
 
 **Updating what the assistant knows:** edit `SYSTEM_PROMPT` in `worker/worker.js` whenever the site content changes, then run `npx wrangler deploy`.
+
+## Pixel Cat
+
+A small pixel-art cat (inspired by the classic Neko/oneko desktop cat) chases the mouse cursor. It sits when it catches up, shows an alert pose when you move again, then runs to the cursor in one of 8 directions. A soft grey circle trails the real cursor. It's built from scratch in `cat.js`, loaded once from `index.html`. The sprite (`cat-sprite.png`) is original art drawn by `tools/make-cat-sprite.py`.
+
+It's off on touch screens, stays still in the corner for visitors who prefer reduced motion, pauses when the tab is hidden, and never blocks clicks.
+
+Tunable constants at the top of `cat.js`:
+
+| Constant | Default | What it does |
+| :--- | :--- | :--- |
+| `SPEED` | `160` | Running speed in px per second |
+| `STOP_DISTANCE` | `32` | How close (px) it gets to the cursor before sitting |
+| `RUN_FPS` | `9` | Leg animation frame rate |
+| `ALERT_MS` | `600` | How long the alert pose shows before it runs |
+| `BLOB_LERP` | `0.15` | Follower circle easing per frame (lower = more lag) |
+| `BLOB_SIZE` | `26` | Follower circle diameter in px |
+| `SLEEP_ENABLED` / `SLEEP_AFTER_MS` | `true` / `12000` | Nap after sitting still this long |
+| `Z_INDEX` | `150` | Above the page and nav, below the chat assistant (200) |
+
+To change the art, edit `tools/make-cat-sprite.py` and run `python tools/make-cat-sprite.py cat-sprite.png` (needs Pillow).
