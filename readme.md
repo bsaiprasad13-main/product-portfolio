@@ -74,6 +74,7 @@ The little pixel cat that chases your cursor is [oneko.js](https://github.com/ad
 
 Changes from the original:
 - It moves smoothly every frame and reacts faster. Sprites still change at the classic 10 fps.
+- A predictable idle routine: it scratches after 2 seconds still and falls asleep after 5 (the original picked an idle animation at random, about every 20 seconds, and woke up on its own).
 - A soft grey circle trails the mouse cursor.
 - Its z-index is 150 instead of the maximum, so it stays below the chat assistant.
 
@@ -86,3 +87,6 @@ Tunable constants at the top of `oneko.js`:
 | `ALERT_FRAMES` | `3` | up to `6` | Alert pose before running, in 100 ms frames |
 | `BLOB_SIZE` | `28` | none | Diameter (px) of the circle trailing the cursor |
 | `BLOB_LERP` | `0.2` | none | Circle easing per frame (lower = more lag) |
+| `SCRATCH_AFTER_MS` | `2000` | random, ~20 s | Sitting still this long, it scratches (the screen edge if it's at one, otherwise itself) |
+| `SCRATCH_FRAMES` | `15` | `10` | Scratch animation length, in 100 ms frames |
+| `SLEEP_AFTER_MS` | `5000` | random, ~20 s | Sitting still this long, it yawns and sleeps until the mouse moves |

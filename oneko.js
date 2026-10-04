@@ -5,6 +5,7 @@
 // - smooth movement every animation frame (sprites still change at the classic 10 fps)
 // - faster, closer, quicker to react (see the tunable constants below)
 // - a soft grey circle that trails the mouse cursor
+// - a predictable idle routine: scratches after 2 s, falls asleep after 5 s
 
 (function oneko() {
   // Tunable constants
@@ -14,6 +15,9 @@
   const ARRIVE_TOLERANCE = 0.5; // px; counts as arrived this close to STOP_DISTANCE
   const BLOB_SIZE = 28;         // px, the circle that trails the cursor
   const BLOB_LERP = 0.2;        // circle easing per 60 fps frame (lower = more lag)
+  const SCRATCH_AFTER_MS = 2000; // sitting still this long: scratches (a wall if at an edge, else itself)
+  const SCRATCH_FRAMES = 15;    // scratch animation length, in 100 ms frames
+  const SLEEP_AFTER_MS = 5000;  // sitting still this long: yawns, then sleeps until the mouse moves
 
   const isReducedMotion =
     window.matchMedia(`(prefers-reduced-motion: reduce)`) === true ||
@@ -273,29 +277,21 @@
   function idle() {
     idleTime += 1;
 
-    // every ~ 20 seconds
-    if (
-      idleTime > 10 &&
-      Math.floor(Math.random() * 200) == 0 &&
-      idleAnimation == null
-    ) {
-      let avalibleIdleAnimations = ["sleeping", "scratchSelf"];
-      if (nekoPosX < 32) {
-        avalibleIdleAnimations.push("scratchWallW");
+    // Predictable idle routine (the original picked one at random, ~every 20 s):
+    // scratch after SCRATCH_AFTER_MS, then yawn and fall asleep after SLEEP_AFTER_MS
+    if (idleAnimation == null) {
+      if (idleTime === Math.round(SCRATCH_AFTER_MS / 100)) {
+        // Scratch the screen edge it's sitting against, otherwise itself
+        let scratches = [];
+        if (nekoPosX < 32) scratches.push("scratchWallW");
+        if (nekoPosY < 32) scratches.push("scratchWallN");
+        if (nekoPosX > window.innerWidth - 32) scratches.push("scratchWallE");
+        if (nekoPosY > window.innerHeight - 32) scratches.push("scratchWallS");
+        if (!scratches.length) scratches = ["scratchSelf"];
+        idleAnimation = scratches[Math.floor(Math.random() * scratches.length)];
+      } else if (idleTime >= Math.round(SLEEP_AFTER_MS / 100)) {
+        idleAnimation = "sleeping";
       }
-      if (nekoPosY < 32) {
-        avalibleIdleAnimations.push("scratchWallN");
-      }
-      if (nekoPosX > window.innerWidth - 32) {
-        avalibleIdleAnimations.push("scratchWallE");
-      }
-      if (nekoPosY > window.innerHeight - 32) {
-        avalibleIdleAnimations.push("scratchWallS");
-      }
-      idleAnimation =
-        avalibleIdleAnimations[
-          Math.floor(Math.random() * avalibleIdleAnimations.length)
-        ];
     }
 
     switch (idleAnimation) {
@@ -304,10 +300,8 @@
           setSprite("tired", 0);
           break;
         }
+        // Stays asleep until the mouse moves (the original woke up on its own after ~19 s)
         setSprite("sleeping", Math.floor(idleAnimationFrame / 4));
-        if (idleAnimationFrame > 192) {
-          resetIdleAnimation();
-        }
         break;
       case "scratchWallN":
       case "scratchWallS":
@@ -315,7 +309,7 @@
       case "scratchWallW":
       case "scratchSelf":
         setSprite(idleAnimation, idleAnimationFrame);
-        if (idleAnimationFrame > 9) {
+        if (idleAnimationFrame >= SCRATCH_FRAMES - 1) {
           resetIdleAnimation();
         }
         break;
