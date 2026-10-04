@@ -1695,19 +1695,19 @@
           <div class="project-card">
             <div class="project-top">
               <div class="project-title display">Jarvis</div>
-              <div class="project-tag">AI Workflow · RAG · Automation</div>
+              <div class="project-tag">AI Workflow · LLM · Automation</div>
             </div>
             <p class="project-desc">A daily AI news briefing that reads tech news for me and emails a short summary
               every morning.</p>
             <ul class="card-list">
-              <li>Built a RAG pipeline that pulls content from 7+ tech news sources, summarizes it, and emails it daily
-              </li>
-              <li>Uses ChromaDB, Gemini Flash, and Resend, orchestrated on Zoho Catalyst 3.0</li>
-              <li>Recovers on its own when a news source fails and sends failure alerts, so it runs reliably at zero
-                infrastructure cost</li>
+              <li>Pulls new stories from 7 tech news sources every morning, and has Gemini Flash write a digest
+                based only on those stories, so it doesn't make up news</li>
+              <li>Skips stories already sent in the last 14 days and near-duplicates from different sources</li>
+              <li>Recovers on its own when a feed moves or blocks requests, flags failed sources in the digest, and
+                emails me failure alerts, running on Zoho Catalyst 3.0 at zero infrastructure cost</li>
             </ul>
             <div class="chip-row">
-              <span class="chip">ChromaDB</span><span class="chip">Gemini Flash</span><span
+              <span class="chip">Python</span><span class="chip">Gemini Flash</span><span
                 class="chip">Resend</span><span class="chip">Zoho Catalyst</span>
             </div>
             <a class="project-visit" href="https://github.com/bsaiprasad13-main/JARVIS-AI-NEWS-REPORTER" target="_blank"
