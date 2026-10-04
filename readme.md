@@ -67,3 +67,7 @@ If `ASSISTANT_ENDPOINT` is empty or the backend is down, the chat replies with m
 4. If the site is served from somewhere other than `https://bsaiprasad13-main.github.io`, add that origin to `ALLOWED_ORIGINS` in `worker/wrangler.toml` and deploy again.
 
 **Updating what the assistant knows:** edit `SYSTEM_PROMPT` in `worker/worker.js` whenever the site content changes, then run `npx wrangler deploy`.
+
+## Oneko Cat
+
+The little pixel cat that chases your cursor is [oneko.js](https://github.com/adryd325/oneko.js) by adryd (MIT License, see `oneko-LICENSE.txt`), a web version of the classic Neko desktop cat. It's loaded with `oneko.js` and the sprite `oneko.gif`. The only change from the original is a lower z-index (150 instead of the maximum), so the cat stays below the chat assistant.
