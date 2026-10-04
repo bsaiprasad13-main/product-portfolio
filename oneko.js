@@ -11,6 +11,7 @@
   const NEKO_SPEED = 300;       // px per second while running (original: 100)
   const STOP_DISTANCE = 24;     // sits when this close to the cursor (original: 48)
   const ALERT_FRAMES = 3;       // alert pose before running, in 100 ms frames (original: up to 6)
+  const ARRIVE_TOLERANCE = 0.5; // px; counts as arrived this close to STOP_DISTANCE
   const BLOB_SIZE = 28;         // px, the circle that trails the cursor
   const BLOB_LERP = 0.2;        // circle easing per 60 fps frame (lower = more lag)
 
@@ -242,7 +243,9 @@
     const diffX = mousePosX - nekoPosX;
     const diffY = mousePosY - nekoPosY;
     const distance = Math.sqrt(diffX ** 2 + diffY ** 2);
-    if (distance <= STOP_DISTANCE) {
+    // Arrive within half a pixel; otherwise floating-point leftovers can keep it
+    // "running" on the spot forever
+    if (distance <= STOP_DISTANCE + ARRIVE_TOLERANCE) {
       running = false;
       return;
     }
@@ -330,7 +333,7 @@
     const distance = Math.sqrt(diffX ** 2 + diffY ** 2);
 
     // While sitting, ignore small cursor jitters (8px of slack) so it doesn't hop back and forth
-    if (distance <= STOP_DISTANCE + (running ? 0 : 8)) {
+    if (distance <= STOP_DISTANCE + (running ? ARRIVE_TOLERANCE : 8)) {
       running = false;
       idle();
       return;
