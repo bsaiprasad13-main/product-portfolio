@@ -30,7 +30,7 @@ THE BIG DECISION: THE EXTENSION YEAR
 
 FREE ROOMS: HIS FIRST PRODUCT
 - Using AI tools, including Claude, he built Free Rooms, a simple web app that solves a pain point he faced himself: finding an empty classroom between classes.
-- He launched it himself: designed a poster and shared it across WhatsApp groups and his network. It reached 250+ users in 2 weeks.
+- He launched it himself: designed a poster and shared it across WhatsApp groups and his network. Through WhatsApp groups, posters, and word-of-mouth it grew to 1.8K+ users and 65K+ user events.
 - He launched near the end of the semester, so usage naturally dropped as the semester ended. He took that as a lesson and planned to make the product better for the next semester.
 
 CAMPUSGUIDE: FROM A PERSONAL PROBLEM TO USER RESEARCH
