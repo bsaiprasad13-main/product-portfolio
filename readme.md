@@ -70,7 +70,7 @@ If `ASSISTANT_ENDPOINT` is empty or the backend is down, the chat replies with m
 
 ## Oneko Cat
 
-The little pixel cat that chases your cursor is [oneko.js](https://github.com/adryd325/oneko.js) by adryd (MIT License, see `oneko-LICENSE.txt`), a web version of the classic Neko desktop cat. It's loaded with `oneko.js` and the sprite `oneko.gif`.
+The little pixel cat that chases your cursor is [oneko.js](https://github.com/adryd325/oneko.js) by adryd (MIT License, see `oneko-LICENSE.txt`), a web version of the classic Neko desktop cat. It's loaded with `oneko.js`. The sprite, `kitten-oneko.png`, is a custom outline-only kitten (big eyes, fluffy cheeks, tufted ears, a fluffy tail) drawn in oneko's 8x4 frame layout by `tools/make-oneko-sprite.py`. To change the art, edit that script and run `python tools/make-oneko-sprite.py kitten-oneko.png` (needs Pillow).
 
 Changes from the original:
 - It moves smoothly every frame and reacts faster. Sprites still change at the classic 10 fps.
