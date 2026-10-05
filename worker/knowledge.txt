@@ -47,17 +47,17 @@ A technical project: an Android app that auto-replies to missed calls. Set a sta
 ## Experience: NextLeap and The Startup School
 PM Fellow at the NextLeap PM Fellowship (Apr 2026 - Jul 2026), where he learned product management more deeply; he enrolled around the time he was building Free Rooms and CampusGuide. Product Development Intern at The Startup School (Ramsetu Alternate Education Solutions Pvt Ltd), May 2026 - Jul 2026. Both are completed; describe them in the past tense.
 
-## Saarang leadership
+## Saarang leadership: Safety & Security Super Coordinator and Head of Creatives
 Saarang (2022-2026) is IIT Madras's large cultural festival: a budget around 2 crores, 11 teams, and 70,000+ attendees over 5 days. Sai spent four years on the Safety & Security (SNS) team: Volunteer (2022); Coordinator (2023), monitoring crowd flow and safety checkpoints during peak hours; Super Coordinator (2025), also Head of Creatives; and he came back as a Volunteer in 2026 to help wherever needed. As Super Coordinator he led 120+ volunteers and 30 coordinators managing crowd safety across multiple venues, working with 11 super-coordinators and 2 cores. As Head of Creatives he created content that doubled coordinator applications and grew volunteer applications by 50%, and managed a 2 lakh budget and vendor deals for wristbands, T-shirts, and posters.
 
-## CFI project management
+## CFI leadership: Project Manager
 CFI (Center for Innovation), Project Manager, 2023-24: he guided 5 Aero Club projects through 3 review cycles, organized the Open House and Research Conclave with a 17 lakh budget, and prioritized resources across projects based on technical complexity, deadlines, and team size.
 
-## EEA coordinator
+## EEA leadership: Coordinator
 EEA (Electrical Engineering Association), Coordinator: he managed a 1.2 lakh team budget across sports, cultural nights, and speaker sessions, and coordinated sports tournaments, tech events, and the association's bonding night.
 
-## Sports and captaincy
-Captain, Physics Dept Cricket League: Champions, 2024-25. Captain, Electrical Engineering Association Cricket: Runners-up, 2024-25. Captain, Inter Department League Cricket: Runners-up, 2025-26. Vice-Captain, Electrical Engineering Association Frisbee: Champions, 2025-26. Totals, stated exactly: he led teams in 4 tournaments; 2 of them ended as championships (Physics Dept cricket as captain, EEA frisbee as vice-captain) and the other 2 as runner-up finishes (EEA cricket and Inter Department cricket, both as captain). Never call all 4 "wins". Across these he evaluated players over multiple sessions, analyzed opponents, tested lineups, and adapted strategy.
+## Sports leadership: cricket captain and frisbee vice-captain
+He led teams as a sports captain, which is part of his leadership experience. Captain, Physics Dept Cricket League: Champions, 2024-25. Captain, Electrical Engineering Association Cricket: Runners-up, 2024-25. Captain, Inter Department League Cricket: Runners-up, 2025-26. Vice-Captain, Electrical Engineering Association Frisbee: Champions, 2025-26. Totals, stated exactly: he led teams in 4 tournaments; 2 of them ended as championships (Physics Dept cricket as captain, EEA frisbee as vice-captain) and the other 2 as runner-up finishes (EEA cricket and Inter Department cricket, both as captain). Never call all 4 "wins". Across these he evaluated players over multiple sessions, analyzed opponents, tested lineups, and adapted strategy.
 
 ## Building with AI tools
 Through building his projects he got comfortable with GitHub, deploying on Railway and Zoho Catalyst, and AI coding tools like Antigravity. In September he switched to Claude Code, which made it much easier to give context, work with files, and keep track of work, so he now builds much faster.

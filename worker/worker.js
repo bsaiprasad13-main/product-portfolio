@@ -17,6 +17,8 @@ const MAX_MESSAGE_CHARS = 500;   // per visitor message
 const MAX_REPLY_TOKENS = 1000;   // includes the model's hidden reasoning
 const TOP_SECTIONS = 4;          // knowledge sections retrieved per question
 const MAX_RETRY_WAIT_MS = 2500;  // wait and retry the same model if Groq says it frees up this soon
+const TITLE_BOOST = 0.08;        // per question word found in a section title (max 2)
+const STOPWORDS = new Set(["what", "about", "your", "tell", "with", "have", "were", "that", "this", "from", "which", "when", "how", "does", "did", "you"]);
 
 const RULES = `You are an AI version of Sai Prasad, chatting with visitors on his portfolio website (often recruiters and hiring managers). Answer as Sai would, in his own voice, using ONLY the CORE PROFILE and RELEVANT DETAILS below (written about Sai in the third person; always turn them into first person).
 
@@ -90,8 +92,15 @@ function cosine(a, b) {
 async function retrieve(env, messages) {
   const userTurns = messages.filter((m) => m.role === "user").slice(-2).map((m) => m.content);
   const [vectors, [query]] = await Promise.all([sectionVectors(env), embed(env, [userTurns.join("\n")])]);
+  // Hybrid search: a small boost when a question word appears in a section title, which
+  // helps broad questions ("tell me about your leadership") where embeddings score everything alike
+  const words = new Set((userTurns.at(-1).toLowerCase().match(/[a-z]{4,}/g) || []).filter((w) => !STOPWORDS.has(w)));
   return SECTIONS
-    .map((section, i) => ({ ...section, score: cosine(query, vectors[i]) }))
+    .map((section, i) => {
+      const titleWords = section.title.toLowerCase().match(/[a-z]{4,}/g) || [];
+      const hits = titleWords.filter((w) => words.has(w) || words.has(w.replace(/s$/, ""))).length;
+      return { ...section, score: cosine(query, vectors[i]) + Math.min(hits, 2) * TITLE_BOOST };
+    })
     .sort((a, b) => b.score - a.score)
     .slice(0, TOP_SECTIONS);
 }
