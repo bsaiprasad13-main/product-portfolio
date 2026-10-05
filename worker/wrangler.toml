@@ -5,7 +5,12 @@ compatibility_date = "2026-09-01"
 [vars]
 # Sites allowed to call the assistant (comma-separated origins, no trailing slash).
 ALLOWED_ORIGINS = "https://bsaiprasad13-main.github.io,http://localhost:8000,http://127.0.0.1:8000"
-GROQ_MODEL = "openai/gpt-oss-120b"
+# Optional: override the model chain (comma-separated, tried in order)
+# GROQ_MODELS = "openai/gpt-oss-120b,openai/gpt-oss-20b,qwen/qwen3.8-27b"
+
+# Workers AI, used to embed questions and knowledge sections for retrieval
+[ai]
+binding = "AI"
 
 # Per-visitor limit: 20 messages per minute per IP.
 [[ratelimits]]
