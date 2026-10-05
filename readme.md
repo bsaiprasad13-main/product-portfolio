@@ -46,11 +46,14 @@ Open `index.html` in any modern browser.
 
 ## Portfolio Assistant (AI chatbot)
 
-The floating chat button in the bottom-right corner opens an AI assistant that answers visitors' questions in my voice, as an AI version of me. It uses Groq (OpenAI GPT-OSS 120B, falling back to GPT-OSS 20B when the free-tier rate limit is hit) and answers only from my portfolio content and my story (`worker/story.txt`).
+The floating chat button in the bottom-right corner opens an AI assistant that answers visitors' questions in my voice, as an AI version of me. It uses retrieval (RAG) over my portfolio content and story, with Groq models (OpenAI GPT-OSS 120B, then GPT-OSS 20B, then Qwen) answering only from what's retrieved.
 
 How it works:
 - **Frontend** (`index.html`): the chat button and panel. It sends the conversation to the backend URL set in `ASSISTANT_ENDPOINT`.
-- **Backend** (`worker/`): a small Cloudflare Worker that stores the Groq API key as a secret, adds my portfolio facts as context, and calls Groq. It only accepts requests from the sites in `ALLOWED_ORIGINS`, keeps up to 10 messages of history, trims each message to 500 characters, and limits each visitor to 20 messages a minute.
+- **Backend** (`worker/`): a small Cloudflare Worker that stores the Groq API key as a secret and calls Groq. It only accepts requests from the sites in `ALLOWED_ORIGINS`, keeps up to 6 messages of history, trims each message to 500 characters, and limits each visitor to 20 messages a minute.
+- **Retrieval:** `worker/knowledge.txt` is split into topic sections (one per `## ` heading). Each question is embedded with Cloudflare Workers AI (`bge-base-en-v1.5`), the 4 closest sections are picked by cosine similarity, and only those are sent, together with the short core profile in `worker/profile.txt`. With about 22 sections, the search runs in memory, so no vector database is needed. That cut each question from about 3,800 to about 1,500 prompt tokens, which matters because Groq's free tier allows 8,000 tokens per minute per model.
+- **Capacity:** if a model is rate-limited, the Worker waits and retries when Groq says it frees up within 2.5 seconds, otherwise it moves to the next model (GPT-OSS 120B, then 20B, then Qwen). In a test of 15 questions about 5 seconds apart, all 15 were answered (it was 7 of 15 before retrieval).
+- **Monitoring:** `npx wrangler tail` shows each request's token usage and which sections were retrieved, never the visitor's text.
 
 If `ASSISTANT_ENDPOINT` is empty or the backend is down, the chat replies with my email and LinkedIn instead.
 
@@ -66,7 +69,7 @@ If `ASSISTANT_ENDPOINT` is empty or the backend is down, the chat replies with m
 3. Copy the `https://portfolio-assistant.<you>.workers.dev` URL it prints into `ASSISTANT_ENDPOINT` in `index.html`.
 4. If the site is served from somewhere other than `https://bsaiprasad13-main.github.io`, add that origin to `ALLOWED_ORIGINS` in `worker/wrangler.toml` and deploy again.
 
-**Updating what the assistant knows:** edit `SYSTEM_PROMPT` in `worker/worker.js` whenever the site content changes, then run `npx wrangler deploy`.
+**Updating what the assistant knows:** edit `worker/knowledge.txt` (keep one topic per `## ` section) and, for facts that should always be included, `worker/profile.txt`. Then run `npx wrangler deploy`. The rules for how it answers are in `RULES` in `worker/worker.js`.
 
 ## Oneko Cat
 
